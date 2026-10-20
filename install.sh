@@ -43,6 +43,10 @@ if ! command -v yay >/dev/null 2>&1
 then
 	echo "${bold}${undr}yay could not be found${ends}"
 	# install yay here
+	git clone https://aur.archlinux.org/yay.git
+	cd yay/
+	makepkg -si
+	cd ..
 else
 	echo "${bold}${undr}yay was found${ends}"
 fi
@@ -53,3 +57,6 @@ build dwm dwm/
 build st st/
 
 echo "exec dwm" > ~/.xinitrc
+
+echo "Installation is complete"
+
