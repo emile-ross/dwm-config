@@ -1,7 +1,17 @@
 #!/usr/bin/sh
 
+bold=$(tput bold)
+undr=$(tput smul)
+ends=$(tput sgr0)
+
+# TODO: make a printing function with the standard format used
+# ( simplifies the program with less variables {bold} & {ends} )
+
 print_step(){
-	echo "Step $1 / 4"
+	echo "${bold}${undr}Step $1 / 3${ends}"
+}
+
+# compiles a program using the makefile
 build(){
 	cd $2
 	make install
@@ -19,7 +29,7 @@ build(){
 # check for root privileges
 if [ "$EUID" -ne 0 ]
 then 
-	echo "Elevated privileges are needed for installing any package"
+	echo "${bold}${undr}Elevated privileges are needed for installing any package${ends}"
 	exit 1
 fi
 
@@ -31,10 +41,10 @@ print_step 2
 echo -n "INFO: "
 if ! command -v yay >/dev/null 2>&1 
 then
-	echo "yay could not be found"
+	echo "${bold}${undr}yay could not be found${ends}"
 	# install yay here
 else
-	echo "yay was found"
+	echo "${bold}${undr}yay was found${ends}"
 fi
 
 print_step 3
