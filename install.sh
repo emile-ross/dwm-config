@@ -2,6 +2,18 @@
 
 print_step(){
 	echo "Step $1 / 4"
+build(){
+	cd $2
+	make install
+	if [ $? -eq 0 ]
+	then
+		echo "${bold}${undr}Compiled $1 successfully${ends}"
+	else
+		echo "${bold}${undr}Errors during $1 compilation. Check the compilation log.${ends}"
+		cd ..
+		exit
+	fi
+	cd ..
 }
 
 # check for root privileges
@@ -27,9 +39,7 @@ fi
 
 print_step 3
 # building st & dwm
-cd dwm/
-make install
-cd ../st/
-make install
+build dwm dwm/
+build st st/
 
 echo "exec dwm" > ~/.xinitrc
