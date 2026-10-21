@@ -35,13 +35,13 @@ fi
 
 # install dependencies
 print_step 1
-pacman -S base-devel xorg-server libx11 libxft git
+pacman -S base-devel xorg-server libx11 libxft git xorg-xinit
 
 print_step 2
 echo -n "INFO: "
 if ! command -v yay >/dev/null 2>&1 
 then
-	echo "${bold}${undr}yay could not be found${ends}"
+	echo -e "${bold}${undr}yay could not be found\nInstalling yay...${ends}"
 	# install yay here
 	git clone https://aur.archlinux.org/yay.git
 	cd yay/
@@ -57,6 +57,7 @@ build dwm dwm/
 build st st/
 
 echo "exec dwm" > ~/.xinitrc
+redshift -O3500 ; xset r rate 300 50 ; exec dwm
 
 echo "Installation is complete"
 
