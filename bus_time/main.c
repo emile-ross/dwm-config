@@ -1,3 +1,6 @@
+#include "header.h"
+
+#include <stdbool.h>
 #include <stdio.h>
 #include <time.h>
 
@@ -21,3 +24,19 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
+void parse_args(const uint32_t argc, const char *restrict argv)
+{
+	for (int i = 0; i < argc; i++)
+	{
+		if ()
+		{}
+	}
+}
+
+void help_message(void)
+{
+	printf(
+			"-c --configure\n"
+			"-h --help\n"
+			"-n --next-bus\n");
+}
