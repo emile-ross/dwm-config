@@ -6,4 +6,7 @@ SRC_FILES := main.c cmp.c args.c
 
 .PHONY: all
 all:
-	$(CC) $(SRC_FILES) -o get_next_bus
+	$(CC) $(SRC_FILES) -o get_next_bus $(CFLAGS) -Werror
+
+warn:
+	$(CC) $(SRC_FILES) -o get_next_bus $(CFLAGS)

@@ -1,6 +1,6 @@
 #include "header.h"
 
-bool scmp(const char *arg, const char *str)
+bool scmp(const char *restrict arg, const char *restrict str)
 {
 	/* match the argument to the string */
 	uint16_t i = 0;	/* supports up to 65535 characters */
