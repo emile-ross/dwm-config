@@ -10,5 +10,10 @@ SRCS := $(addprefix src/, $(SRC_FILES))
 all:
 	$(CC) $(SRCS) -o get_next_bus $(CFLAGS) -Werror -g
 
+.PHONY: warn
 warn:
 	$(CC) $(SRCS) -o get_next_bus $(CFLAGS)
+
+.PHONY: build
+build: 
+	$(CC) $(SRCS) -o get_next_bus -std=c99

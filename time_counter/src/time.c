@@ -2,6 +2,7 @@
 
 #include <ctype.h>
 #include <stdlib.h>
+#include <inttypes.h>
 
 time_type extract_time(bool *valid_time, char *line_buf, size_t length)
 {
@@ -35,7 +36,7 @@ time_type extract_time(bool *valid_time, char *line_buf, size_t length)
 			long input = strtol(str, &endptr, 10);
 			if (input > 60)
 			{
-				fprintf(stderr, "out of bounds value %ld\nline: \"%s\"\n", input, line_buf);
+				fprintf(stderr, "out of bounds value %" PRId64 "\nline: \"%s\"\n", input, line_buf);
 				*valid_time = false;
 				return ret;
 			}

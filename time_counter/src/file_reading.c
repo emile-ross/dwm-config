@@ -14,7 +14,7 @@ file_data fread_times(char *file_path)
 {
 	FILE *fp = fopen(file_path, "r");
 	file_data ret = { NULL, NULL };
-	time_type **times_array = NULL;
+	time_type *times_array = NULL;
 	uint16_t num_elements_alloc = BASE_ELEMENTS;
 
 	if (fp == NULL)
@@ -59,7 +59,7 @@ file_data fread_times(char *file_path)
 		time_type returned_time = extract_time(&valid_time, line, line_len);
 		if (valid_time)
 		{
-			*(times_array[current_entry]) = returned_time;
+			times_array[current_entry] = returned_time;
 			current_entry++;
 		}
 	}
