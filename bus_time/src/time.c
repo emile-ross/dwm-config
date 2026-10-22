@@ -6,6 +6,7 @@
 #define MAX_LINE_LEN (256)
 #define MAX_NUM_TIMES (256)
 
+/*
 void get_next_time(char *file_path)
 {
 	FILE *fp = fopen(file_path);
@@ -18,8 +19,8 @@ void get_next_time(char *file_path)
 
 	char line[MAX_LINE_LEN] = { 0 };
 
-	/* declared as 16 bit even though max is 256 times
-	 * just in case we increase it to something else */
+	* declared as 16 bit even though max is 256 times
+	 * just in case we increase it to something else *
 	uint16_t line_number = 0;
 	
 	while (fgets(line, MAX_LINE_LEN - 1, fp))
@@ -34,6 +35,7 @@ void get_next_time(char *file_path)
 	fclose(fp);
 	return NULL;
 }
+*/
 
 time_type extract_time(bool *valid_time, char *line, size_t length)
 {
@@ -59,7 +61,7 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 			uint8_t index = 0;
 			for (; sizeof(str) > index && isdigit(line[j]); j++)
 			{
-				str[index] = str[j];
+				str[index] = line[j];
 				index++;
 			}
 
@@ -67,11 +69,11 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 			long input = strtol(str, &endptr, 10);
 			if (input > 60)
 			{
-				fprintf(stderr, "out of bounds value %ld\nline: \"%s\"\n", input, );
+				fprintf(stderr, "out of bounds value %ld\nline: \"%s\"\n", input, line);
 				*valid_time = false;
 				return ret;
 			}
-			ret.hour = (uint8_t)input;
+			ret.hour = (int8_t)input;
 			printf("%d\n", input);
 
 			prev_state = EXPECT_HOUR;
@@ -114,7 +116,7 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 			uint8_t index = 0;
 			for (; sizeof(str) > index && isdigit(line[j]); j++)
 			{
-				str[index] = str[j];
+				str[index] = line[j];
 				index++;
 			}
 
@@ -122,7 +124,7 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 			long input = strtol(str, &endptr, 10);
 			if (input > 60)
 			{
-				fprintf(stderr, "out of bounds value %ld\nline: \"%s\"\n", input, );
+				fprintf(stderr, "out of bounds value %ld\nline: \"%s\"\n", input, line);
 				*valid_time = false;
 				return ret;
 			}
@@ -130,7 +132,7 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 			/* because minute is the highest precision 
 			 * this needs to be edited if it's changed to seconds */
 			printf("%d\n", input);
-			ret.minute = (uint8_t)input;
+			ret.minute = (int8_t)input;
 			done = true;
 			*valid_time = true;
 			break;

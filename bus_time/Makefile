@@ -11,4 +11,4 @@ all:
 	$(CC) $(SRCS) -o get_next_bus $(CFLAGS) -Werror
 
 warn:
-	$(CC) $(SRC_FILES) -o get_next_bus $(CFLAGS)
+	$(CC) $(SRCS) -o get_next_bus $(CFLAGS)
