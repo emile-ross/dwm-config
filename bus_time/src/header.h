@@ -17,6 +17,6 @@
 	void help_message(void);
 	time_type extract_time(bool *valid_time, char *line, size_t length);
 
-/* time.c */
-	file_data get_next_time(char *file_path);
+/* file_reading.c */
+	file_data fread_times(char *file_path);
 #endif /* HEADER_H */

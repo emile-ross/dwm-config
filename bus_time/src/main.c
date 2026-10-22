@@ -18,7 +18,7 @@ int main(const int argc, const char *restrict argv[])
 	}
 
 
-	get_next_time("test.txt");
+	fread_times("example.txt");
 	bool success = false;
 	time_type a = extract_time(&success, "12:04", 5);
 
