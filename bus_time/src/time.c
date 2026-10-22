@@ -74,7 +74,6 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 				return ret;
 			}
 			ret.hour = (int8_t)input;
-			printf("%d\n", input);
 
 			prev_state = EXPECT_HOUR;
 			state = EXPECT_SEPARATION;
@@ -131,7 +130,6 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 
 			/* because minute is the highest precision 
 			 * this needs to be edited if it's changed to seconds */
-			printf("%d\n", input);
 			ret.minute = (int8_t)input;
 			done = true;
 			*valid_time = true;
