@@ -44,13 +44,24 @@ file_data get_next_time(char *file_path)
 			fprintf(stderr, "Line %d is missing parameters\n", line_number);
 			continue;
 		}
+		bool valid_time = true;
+		time_type returned_time = extract_time(&valid_time, line, line_len);
+		if (valid_time)
+		{
+			(*times_array)[current_entry] = returned_time;
+			current_entry++;
+		}
 	}
+
+	/* assign the pointer to the array to the return value this pointer
+	 * will then be used in order to go through all times possible */
+	ret.time = times_array;
 
 	fclose(fp);
 	return ret;
 }
 
-time_type extract_time(bool *valid_time, char *line, size_t length)
+time_type extract_time(bool *valid_time, char *line_buf, size_t length)
 {
 	enum date_str_state state = EXPECT_HOUR;
 	enum date_str_state prev_state = EXPECT_HOUR;
@@ -59,7 +70,7 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 
 	for (uint16_t i = 0; !done && i < length; i++)
 	{
-		char cur = line[i];
+		char cur = line_buf[i];
 		switch (state)
 		{
 		case EXPECT_HOUR:
@@ -72,9 +83,9 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 			uint16_t j = i;
 			char str[4] = { 0 };
 			uint8_t index = 0;
-			for (; sizeof(str) > index && isdigit(line[j]); j++)
+			for (; sizeof(str) > index && isdigit(line_buf[j]); j++)
 			{
-				str[index] = line[j];
+				str[index] = line_buf[j];
 				index++;
 			}
 
@@ -126,9 +137,9 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 			uint16_t j = i;
 			char str[4] = { 0 };
 			uint8_t index = 0;
-			for (; sizeof(str) > index && isdigit(line[j]); j++)
+			for (; sizeof(str) > index && isdigit(line_buf[j]); j++)
 			{
-				str[index] = line[j];
+				str[index] = line_buf[j];
 				index++;
 			}
 
