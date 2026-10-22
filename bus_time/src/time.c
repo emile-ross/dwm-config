@@ -39,13 +39,15 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 	enum date_str_state state = EXPECT_HOUR;
 	enum date_str_state prev_state = EXPECT_HOUR;
 	time_type ret = { 0 , 0 };
+	bool done = false;
 
-	for (uint16_t i = 0; i < length; i++)
+	for (uint16_t i = 0; !done && i < length; i++)
 	{
 		char cur = line[i];
 		switch (state)
 		{
 		case EXPECT_HOUR:
+		{
 			if (!(isdigit(cur)))
 			{
 				break;
@@ -61,10 +63,17 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 			}
 
 			char *endptr = NULL;
-			uint16_t strtol(str, &endptr, 10);
+			uint16_t input = strtol(str, &endptr, 10);
+			if (input > 60 || input < 0)
+			{
+				fprintf(stderr, "out of bounds value %ld\nline: \"%s\"\n", input, );
+				return NULL;
+			}
+
 			prev_state = EXPECT_HOUR;
 			state = EXPECT_SEPARATION;
 			break;
+		}
 		case EXPECT_SEPARATION:
 			/* if none of these match we continue checking for characters */
 			if (!( (cur == ':') || (cur == ',') || (cur == ' ')))
@@ -90,7 +99,33 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 
 			break;
 		case EXPECT_MINUTE:
-			break;
+		{
+			if (!(isdigit(cur)))
+			{
+				break;
+			}
+
+			uint16_t j = i;
+			char str[4] = { 0 };
+			uint8_t index = 0;
+			for (; sizeof(str) > index && isdigit(line[j]); j++)
+			{
+				str[index] = str[j];
+				index++;
+			}
+
+			char *endptr = NULL;
+			uint16_t input = strtol(str, &endptr, 10);
+			if (input > 60 || input < 0)
+			{
+				fprintf(stderr, "out of bounds value %ld\nline: \"%s\"\n", input, );
+				return NULL;
+			}
+
+			/* because minute is the highest precision 
+			 * this needs to be edited if it's changed to seconds */
+			done = true;
+		}
 		case EXPECT_ERROR:
 			fprintf(stderr, "Internal error, prev_state was set to EXPECT_SEPARATION and it was incremented and switched onto\n");
 			printf("line being parsed: \"%s\" at index %u\n", line, i);
