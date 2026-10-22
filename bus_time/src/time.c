@@ -2,6 +2,7 @@
 
 #include <ctype.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_LINE_LEN (256)
 #define MAX_NUM_TIMES (256)
@@ -10,11 +11,18 @@
 void get_next_time(char *file_path)
 {
 	FILE *fp = fopen(file_path);
+	time_type **times_array = malloc(sizeof(time_type) * BASE_ELEMENTS);
+	if (times_array == NULL)
+	{
+		fprintf(stderr, "error: malloc() failed to allocate memory of size %lu\n", sizeof(time_type) * num_elements_alloc);
+		return ret;
+	}
+
 
 	if (fp == NULL)
 	{
 		fprintf(stderr, "No such file or directory \"%s\"\n", file_path);
-		return NULL;
+		return ret;
 	}
 
 	char line[MAX_LINE_LEN] = { 0 };
@@ -25,10 +33,12 @@ void get_next_time(char *file_path)
 	
 	while (fgets(line, MAX_LINE_LEN - 1, fp))
 	{
+		line_number++;
 		size_t line_len = strlen(line);
-		if (line_len < 5)
+		if (line_len < 4)
 		{
-			fprintf(stderr, "Line %d is missing parameters\n");
+			fprintf(stderr, "Line %d is missing parameters\n", line_number);
+			continue;
 		}
 	}
 
