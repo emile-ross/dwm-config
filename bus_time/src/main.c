@@ -21,6 +21,7 @@ int main(const int argc, const char *restrict argv[])
 	 * and then print something in a json format
 	 * in order for it to be compatible with waybar */
 	printf("%lu\n", time(NULL));
+
 	return 0;
 }
 
