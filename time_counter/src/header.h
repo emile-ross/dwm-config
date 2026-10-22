@@ -13,7 +13,7 @@
 	bool scmp(const char *restrict arg, const char *restrict str);
 
 /* args.c */
-	struct arg_types parse_args(const uint32_t argc, const char *restrict argv[]);
+	struct arguments parse_args(const uint32_t argc, const char *restrict argv[]);
 	void help_message(void);
 	time_type extract_time(bool *valid_time, char *line, size_t length);
 

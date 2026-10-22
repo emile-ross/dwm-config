@@ -27,13 +27,14 @@ enum date_str_state
 
 typedef enum
 {
+	INVALID_FLAG,
 	CONFIGURE,
 	HELP,
 	NEXT_EVENT,
 	PREV_EVENT
 } flag_types;
 
-struct arg_types 
+struct arguments 
 {
 	union {
 		char *file_path;

@@ -13,6 +13,8 @@ struct arguments parse_args(const uint32_t argc, const char *restrict argv[])
 		NULL
 	};
 
+	/* allocate the flags on the heap */
+	size_t increment = 1;
 	size_t num_elements = BASE_ARGS;
 	ret_args.flags = malloc(sizeof(flag_types) * num_elements);
 
@@ -34,11 +36,20 @@ struct arguments parse_args(const uint32_t argc, const char *restrict argv[])
 
 	for (uint32_t i = 0; i < argc; i++)
 	{
+		printf("Element #%"PRIu32" \n", i);
 		if (scmp("-p", argv[i]) || scmp("--path", argv[i]))
 		{
 			/* TODO write something to the heap allocated
 			 * array of command line arguments */
 			printf("-p was found\n");
+		}
+		else if (scmp("-p", argv[i]) || scmp("--prev", argv[i]))
+		{
+			printf("--string was found\n");
+		}
+		else if (scmp("-n", argv[i]) || scmp("--next", argv[i]))
+		{
+			printf("--string was found\n");
 		}
 		else if (scmp("-s", argv[i]) || scmp("--string", argv[i]))
 		{
@@ -46,6 +57,11 @@ struct arguments parse_args(const uint32_t argc, const char *restrict argv[])
 			 * array of command line arguments */
 			printf("--string was found\n");
 		}
+		else
+		{
+			INVALID_FLAG;
+		}
+
 	}
 	return ret_args;
 }
