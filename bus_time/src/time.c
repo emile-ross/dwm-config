@@ -62,11 +62,20 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 			break;
 		case EXPECT_SEPARATION:
 			/* if none of these match we continue checking for characters */
-			if (!(
-					(cur == ':') || 
-					(cur == ',') || 
-					(cur == '.')))
+			if (!( (cur == ':') || (cur == ',') || (cur == ' ')))
 			{
+				if (prev_state == EXPECT_MINUTE)
+				{
+					if (!( (cur == 'm') || (cur == 'M') ))
+						break;
+				}
+				else if (prev_state == EXPECT_HOUR)
+				{
+					if (!( (cur == 'h') || (cur == 'H') ))
+						break;
+				}
+			}
+			/* we're still executing if one of the characters above matched */
 			break;
 		case EXPECT_MINUTE:
 			break;
