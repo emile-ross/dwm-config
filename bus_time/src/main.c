@@ -1,5 +1,6 @@
 #include "header.h"
 
+#include <inttypes.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <time.h>
@@ -39,8 +40,8 @@ int main(const int argc, const char *restrict argv[])
 		printf("Time is upcoming\n");
 	}
 
-	printf("%ld\n", current_time);
-	printf("%ld\n", (current_time) % (24 * 60));
+	printf("%" PRId64 "\n", current_time);
+	printf("%" PRId64 "\n", (current_time) % (24 * 60));
 
 	return 0;
 }

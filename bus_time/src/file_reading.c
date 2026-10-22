@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <inttypes.h>
 
 #define MAX_LINE_LEN (256)
 #define MAX_NUM_TIMES (256)
@@ -25,7 +26,8 @@ file_data fread_times(char *file_path)
 	times_array = malloc(sizeof(time_type) * num_elements_alloc);
 	if (times_array == NULL)
 	{
-		fprintf(stderr, "error: malloc() failed to allocate memory of size %lu\n", sizeof(time_type) * num_elements_alloc);
+		fprintf(stderr, "error: malloc() failed to allocate memory of size %" PRId64 "\n",
+				sizeof(time_type) * num_elements_alloc);
 		fclose(fp);
 		return ret;
 	}
@@ -49,14 +51,15 @@ file_data fread_times(char *file_path)
 		size_t line_len = strlen(line);
 		if (line_len < 4)
 		{
-			fprintf(stderr, "Line %d is missing parameters\n", line_number);
+			fprintf(stderr, "Line %" PRId16 " is missing parameters\n",
+					line_number);
 			continue;
 		}
 		bool valid_time = true;
 		time_type returned_time = extract_time(&valid_time, line, line_len);
 		if (valid_time)
 		{
-			(*times_array)[current_entry] = returned_time;
+			*(times_array[current_entry]) = returned_time;
 			current_entry++;
 		}
 	}

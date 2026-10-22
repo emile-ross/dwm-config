@@ -8,7 +8,7 @@ SRCS := $(addprefix src/, $(SRC_FILES))
 
 .PHONY: all
 all:
-	$(CC) $(SRCS) -o get_next_bus $(CFLAGS) -Werror
+	$(CC) $(SRCS) -o get_next_bus $(CFLAGS) -Werror -g
 
 warn:
 	$(CC) $(SRCS) -o get_next_bus $(CFLAGS)
