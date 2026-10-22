@@ -33,3 +33,23 @@ void get_next_time(char *file_path)
 	fclose(fp);
 	return NULL;
 }
+
+time_type extract_time(bool *valid_time, char *line, size_t length)
+{
+	enum date_str_state state = EXPECT_HOUR;
+	time_type ret = { 0 , 0 };
+
+	for (uint16_t i = 0; i < length; i++)
+	{
+		switch (state)
+		{
+		case EXPECT_HOUR:
+			break;
+		case EXPECT_SEPARATION:
+			break;
+		case EXPECT_MINUTE:
+			break;
+		}
+	}
+	
+}
