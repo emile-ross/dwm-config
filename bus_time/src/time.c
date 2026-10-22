@@ -7,10 +7,14 @@
 #define MAX_LINE_LEN (256)
 #define MAX_NUM_TIMES (256)
 
-/*
-void get_next_time(char *file_path)
+#define BASE_ELEMENTS (8)
+#define ELEMETS_INRC (4)
+
+file_data get_next_time(char *file_path)
 {
-	FILE *fp = fopen(file_path);
+	FILE *fp = fopen(file_path, "r");
+
+	file_data ret = { NULL, NULL };
 	time_type **times_array = malloc(sizeof(time_type) * BASE_ELEMENTS);
 	if (times_array == NULL)
 	{
@@ -43,9 +47,8 @@ void get_next_time(char *file_path)
 	}
 
 	fclose(fp);
-	return NULL;
+	return ret;
 }
-*/
 
 time_type extract_time(bool *valid_time, char *line, size_t length)
 {
@@ -79,7 +82,7 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 			long input = strtol(str, &endptr, 10);
 			if (input > 60)
 			{
-				fprintf(stderr, "out of bounds value %ld\nline: \"%s\"\n", input, line);
+				fprintf(stderr, "out of bounds value %ld\nline: \"%s\"\n", input, line_buf);
 				*valid_time = false;
 				return ret;
 			}
@@ -133,7 +136,7 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 			long input = strtol(str, &endptr, 10);
 			if (input > 60)
 			{
-				fprintf(stderr, "out of bounds value %ld\nline: \"%s\"\n", input, line);
+				fprintf(stderr, "out of bounds value %ld\nline: \"%s\"\n", input, line_buf);
 				*valid_time = false;
 				return ret;
 			}
@@ -147,7 +150,7 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 		}
 		case EXPECT_ERROR:
 			fprintf(stderr, "Internal error, prev_state was set to EXPECT_SEPARATION and it was incremented and switched onto\n");
-			printf("line being parsed: \"%s\" at index %u\n", line, i);
+			printf("line being parsed: \"%s\" at index %u\n", line_buf, i);
 			*valid_time = false;
 			return ret;
 		default:
