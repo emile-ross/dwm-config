@@ -39,6 +39,7 @@ struct arg_types
 		char *file_path;
 		char *time_string;
 	} source;
+	flag_types *flags;	/* heap allocated array */
 };
 
 #endif /* DATA_TYPES_H */
