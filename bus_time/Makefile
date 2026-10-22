@@ -2,7 +2,7 @@ CC := cc
 
 CFLAGS := -std=c99 -Wall -Wconversion -Wextra -Wpedantic -Wshadow -Wswitch-enum 
 
-SRC_FILES := main.c cmp.c args.c
+SRC_FILES := main.c cmp.c args.c time.c 
 SRCS := $(addprefix src/, $(SRC_FILES))
 
 

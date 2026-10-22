@@ -17,6 +17,8 @@ int main(const int argc, const char *restrict argv[])
 		return 0;
 	}
 
+	extract_time(NULL, "12:04", 5);
+
 	/* this will eventually read from a file 
 	 * and then print something in a json format
 	 * in order for it to be compatible with waybar */

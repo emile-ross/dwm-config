@@ -1,6 +1,7 @@
 #include "header.h"
 
 #include <ctype.h>
+#include <stdlib.h>
 
 #define MAX_LINE_LEN (256)
 #define MAX_NUM_TIMES (256)
@@ -63,12 +64,15 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 			}
 
 			char *endptr = NULL;
-			uint16_t input = strtol(str, &endptr, 10);
-			if (input > 60 || input < 0)
+			long input = strtol(str, &endptr, 10);
+			if (input > 60)
 			{
 				fprintf(stderr, "out of bounds value %ld\nline: \"%s\"\n", input, );
-				return NULL;
+				*valid_time = false;
+				return ret;
 			}
+			ret.hour = (uint8_t)input;
+			printf("%d\n", input);
 
 			prev_state = EXPECT_HOUR;
 			state = EXPECT_SEPARATION;
@@ -115,25 +119,34 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 			}
 
 			char *endptr = NULL;
-			uint16_t input = strtol(str, &endptr, 10);
-			if (input > 60 || input < 0)
+			long input = strtol(str, &endptr, 10);
+			if (input > 60)
 			{
 				fprintf(stderr, "out of bounds value %ld\nline: \"%s\"\n", input, );
-				return NULL;
+				*valid_time = false;
+				return ret;
 			}
 
 			/* because minute is the highest precision 
 			 * this needs to be edited if it's changed to seconds */
+			printf("%d\n", input);
+			ret.minute = (uint8_t)input;
 			done = true;
+			*valid_time = true;
+			break;
 		}
 		case EXPECT_ERROR:
 			fprintf(stderr, "Internal error, prev_state was set to EXPECT_SEPARATION and it was incremented and switched onto\n");
 			printf("line being parsed: \"%s\" at index %u\n", line, i);
-			return NULL;
+			*valid_time = false;
+			return ret;
 		default:
 			fprintf(stderr, "I truly have no idea what's going on in here\n");
-			return NULL;
+			*valid_time = false;
+			return ret;
 		}
 	}
+
+	return ret;
 	
 }

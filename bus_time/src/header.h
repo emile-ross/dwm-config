@@ -15,5 +15,6 @@
 /* args.c */
 	void parse_args(const uint32_t argc, const char *restrict argv[]);
 	void help_message(void);
+	time_type extract_time(bool *valid_time, char *line, size_t length);
 
 #endif /* HEADER_H */

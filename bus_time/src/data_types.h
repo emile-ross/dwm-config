@@ -18,7 +18,7 @@ typedef struct
 
 enum date_str_state
 {
-	EXPECT_SEPARATOR = 0,
+	EXPECT_SEPARATION = 0,
 	EXPECT_ERROR = 1,
 	EXPECT_HOUR = 2,
 	EXPECT_MINUTE = 3
