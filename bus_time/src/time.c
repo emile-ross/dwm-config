@@ -37,15 +37,36 @@ void get_next_time(char *file_path)
 time_type extract_time(bool *valid_time, char *line, size_t length)
 {
 	enum date_str_state state = EXPECT_HOUR;
+	enum date_str_state prev_state = EXPECT_HOUR;
 	time_type ret = { 0 , 0 };
 
 	for (uint16_t i = 0; i < length; i++)
 	{
+		char cur = line[i];
 		switch (state)
 		{
 		case EXPECT_HOUR:
+			if (!(isdigit(cur)))
+			{
+				break;
+			}
+
+			uint16_t j = i;
+			char str[4] = { 0 };
+			uint8_t index = 0;
+			for (; sizeof(str) > index && isdigit(line[j]); j++)
+			{
+				str[index] = str[j];
+				index++;
+			}
 			break;
 		case EXPECT_SEPARATION:
+			/* if none of these match we continue checking for characters */
+			if (!(
+					(cur == ':') || 
+					(cur == ',') || 
+					(cur == '.')))
+			{
 			break;
 		case EXPECT_MINUTE:
 			break;
