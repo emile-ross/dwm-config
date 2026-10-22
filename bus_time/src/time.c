@@ -59,6 +59,11 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 				str[index] = str[j];
 				index++;
 			}
+
+			char *endptr = NULL;
+			uint16_t strtol(str, &endptr, 10);
+			prev_state = EXPECT_HOUR;
+			state = EXPECT_SEPARATION;
 			break;
 		case EXPECT_SEPARATION:
 			/* if none of these match we continue checking for characters */
@@ -73,12 +78,26 @@ time_type extract_time(bool *valid_time, char *line, size_t length)
 				{
 					if (!( (cur == 'h') || (cur == 'H') ))
 						break;
+					else
+						state = EXPECT_MINUTE;
 				}
 			}
 			/* we're still executing if one of the characters above matched */
+			state = prev_state + 1;
+			/* EXPECT_SEPARATION should never be incremented 
+			 * if it gets incremented it triggers an error */
+			prev_state = EXPECT_SEPARATION;
+
 			break;
 		case EXPECT_MINUTE:
 			break;
+		case EXPECT_ERROR:
+			fprintf(stderr, "Internal error, prev_state was set to EXPECT_SEPARATION and it was incremented and switched onto\n");
+			printf("line being parsed: \"%s\" at index %u\n", line, i);
+			return NULL;
+		default:
+			fprintf(stderr, "I truly have no idea what's going on in here\n");
+			return NULL;
 		}
 	}
 	

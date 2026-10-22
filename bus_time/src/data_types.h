@@ -3,11 +3,6 @@
 
 #include <stdint.h>
 
-typedef struct
-{
-	char *title;
-	time_type **time;
-} file_data;
 
 typedef struct
 {
@@ -15,11 +10,18 @@ typedef struct
 	int8_t minute;
 } time_type;
 
+typedef struct
+{
+	char *title;
+	time_type **time;
+} file_data;
+
 enum date_str_state
 {
-	EXPECT_HOUR,
-	EXPECT_SEPARATOR,
-	EXPECT_MINUTE
+	EXPECT_SEPARATOR = 0,
+	EXPECT_ERROR = 1,
+	EXPECT_HOUR = 2,
+	EXPECT_MINUTE = 3
 };
 
 #endif /* DATA_TYPES_H */
