@@ -5,6 +5,12 @@
 
 #define BASE_ARGS (3)
 
+/* this crashes the program whenever we encounter an error
+ * these errors are not critical and parsing can still continue 
+ * however the program will behave in an unpredictable 
+ * way if it encounters some errors since some features get disabled */
+static bool crash_on_failure = false;	/* default is false */
+
 struct arguments parse_args(const uint32_t argc, const char *restrict argv[])
 {
 	struct arguments ret_args =
@@ -34,8 +40,31 @@ struct arguments parse_args(const uint32_t argc, const char *restrict argv[])
 
 
 
+	size_t current_index = 0;
 	for (uint32_t i = 0; i < argc; i++)
 	{
+		if (current_index + 1 >= num_elements)
+		{
+			num_elements += increment;
+			increment <<= 1;
+			flag_types *ptr = realloc(ret_args.flags, sizeof(flag_types) * num_elements);
+			if (ptr == NULL)
+			{
+				fprintf(stderr, "error: malloc() failed to allocate memory "
+						"of size %" PRIu64 " bytes\n", sizeof(flag_types) * num_elements);
+				if (crash_on_failure)
+				{
+					fprintf(stderr, "The program could've recovered but crash_on_failure"
+							" was set to true, therefore we exited the program\n");
+					free(ret_args.flags);
+					exit(EXIT_FAILURE);
+				}
+				fprintf(stderr, "all flags following index %" PRIu32" will be ignored\n"
+						"%" PRIu32 " out of %"PRIu32" arguments were parsed\n", 
+						i, i + 1, argc);
+			}
+			ret_args.flags = ptr;
+		}
 		printf("Element #%"PRIu32" \n", i);
 		if (scmp("-p", argv[i]) || scmp("--path", argv[i]))
 		{
@@ -61,7 +90,6 @@ struct arguments parse_args(const uint32_t argc, const char *restrict argv[])
 		{
 			INVALID_FLAG;
 		}
-
 	}
 	return ret_args;
 }
