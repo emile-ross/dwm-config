@@ -8,7 +8,6 @@
 #include <stdint.h>
 #include <stdio.h>
 
-
 /* cmp.c */
 	bool scmp(const char *restrict arg, const char *restrict str);
 

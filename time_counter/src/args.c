@@ -19,6 +19,8 @@ struct arguments parse_args(const uint32_t argc, const char *restrict argv[])
 		NULL
 	};
 
+	/* TODO write string & file path to ret_args */
+
 	/* allocate the flags on the heap */
 	size_t increment = 1;
 	size_t num_elements = BASE_ARGS;
@@ -37,8 +39,6 @@ struct arguments parse_args(const uint32_t argc, const char *restrict argv[])
 	NEXT_EVENT,
 	PREV_EVENT
 	*/
-
-
 
 	size_t current_index = 0;
 	for (uint32_t i = 0; i < argc; i++)
@@ -75,10 +75,14 @@ struct arguments parse_args(const uint32_t argc, const char *restrict argv[])
 		else if (scmp("-p", argv[i]) || scmp("--prev", argv[i]))
 		{
 			printf("--string was found\n");
+			ret_args.flags[current_index] = PREV_EVENT;
+			current_index++;
 		}
 		else if (scmp("-n", argv[i]) || scmp("--next", argv[i]))
 		{
 			printf("--string was found\n");
+			ret_args.flags[current_index] = NEXT_EVENT;
+			current_index++;
 		}
 		else if (scmp("-s", argv[i]) || scmp("--string", argv[i]))
 		{
@@ -86,9 +90,15 @@ struct arguments parse_args(const uint32_t argc, const char *restrict argv[])
 			 * array of command line arguments */
 			printf("--string was found\n");
 		}
+		else if (scmp("-H", "--help"))
+		{
+			ret_args.flags[current_index] = HELP;
+			current_index++;
+		}
 		else
 		{
-			INVALID_FLAG;
+			ret_args.flags[current_index] = INVALID_FLAG;
+			current_index++;
 		}
 	}
 	return ret_args;
