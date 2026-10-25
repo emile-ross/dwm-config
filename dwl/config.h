@@ -115,14 +115,21 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
-/* commands */
+/* user defined commands */
 static const char *termcmd[] = { "kitty", NULL };
 static const char *menucmd[] = { "rofi -show", NULL };
 
+static const char *firefox_cmd[] = { "firefox", NULL };
+static const char *floorp_cmd[] = { "floorp", NULL };
+static const char *librewolf_cmd[] = { "librewolf", NULL };
+
 static const Key keys[] = {
-	/* modifier                  key                  function          argument */
+	/* modifier			key		function	argument */
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_d,	spawn,		{.v = menucmd} },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_q,	spawn,		{.v = termcmd} },
+	{ WLR_MODIFIER_LOGO,		XKB_KEY_1,	spawn,		{.v = floorp_cmd} },
+	{ WLR_MODIFIER_LOGO,		XKB_KEY_2,	spawn,		{.v = firefox_cmd} },
+	{ WLR_MODIFIER_LOGO,		XKB_KEY_2,	spawn,		{.v = librewolf_cmd} },
 	{ MODKEY,			XKB_KEY_j,	focusstack,	{.i = +1} },
 	{ MODKEY,			XKB_KEY_k,	focusstack,	{.i = -1} },
 	{ MODKEY,			XKB_KEY_i,	incnmaster,	{.i = +1} },
