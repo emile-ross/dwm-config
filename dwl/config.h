@@ -121,7 +121,9 @@ static const char *menucmd[] = { "rofi -show", NULL };
 
 static const char *firefox_cmd[] = { "firefox", NULL };
 static const char *floorp_cmd[] = { "floorp", NULL };
+static const char *chrome_cmd[] = { "chromium", NULL };
 static const char *librewolf_cmd[] = { "librewolf", NULL };
+static const char *exit_cmd[] = { "wlogout", NULL };
 
 static const Key keys[] = {
 	/* modifier			key		function	argument */
@@ -129,7 +131,9 @@ static const Key keys[] = {
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_q,	spawn,		{.v = termcmd} },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_1,	spawn,		{.v = floorp_cmd} },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_2,	spawn,		{.v = firefox_cmd} },
-	{ WLR_MODIFIER_LOGO,		XKB_KEY_2,	spawn,		{.v = librewolf_cmd} },
+	{ WLR_MODIFIER_LOGO,		XKB_KEY_3,	spawn,		{.v = chrome_cmd} },
+	{ WLR_MODIFIER_LOGO,		XKB_KEY_4,	spawn,		{.v = librewolf_cmd} },
+
 	{ MODKEY,			XKB_KEY_j,	focusstack,	{.i = +1} },
 	{ MODKEY,			XKB_KEY_k,	focusstack,	{.i = -1} },
 	{ MODKEY,			XKB_KEY_i,	incnmaster,	{.i = +1} },
@@ -138,15 +142,15 @@ static const Key keys[] = {
 	{ MODKEY,			XKB_KEY_l,	setmfact,	{.f = +0.05f} },
 	{ MODKEY,			XKB_KEY_Return,	zoom,		{0} },
 	{ MODKEY,			XKB_KEY_Tab,	view,		{0} },
-	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_c,		killclient,	{0} },
+	{ MODKEY|WLR_MODIFIER_SHIFT,	XKB_KEY_c,	killclient,	{0} },
 	{ MODKEY,			XKB_KEY_t,	setlayout,	{.v = &layouts[0]} },
 	{ MODKEY,			XKB_KEY_y,	setlayout,	{.v = &layouts[1]} },
 	{ MODKEY,			XKB_KEY_m,	setlayout,	{.v = &layouts[2]} },
 	{ MODKEY,			XKB_KEY_space,	setlayout,	{0} },
-	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_space,	togglefloating,	{0} },
+	{ MODKEY|WLR_MODIFIER_SHIFT,	XKB_KEY_space,	togglefloating,	{0} },
 	{ MODKEY,			XKB_KEY_f,	togglefullscreen,	{0} },
 	{ MODKEY,			XKB_KEY_0,	view,		{.ui = ~0} },
-	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_0,		tag,		{.ui = ~0} },
+	{ MODKEY|WLR_MODIFIER_SHIFT,	XKB_KEY_0,	tag,		{.ui = ~0} },
 	{ MODKEY,			XKB_KEY_comma,	focusmon,	{.i = WLR_DIRECTION_LEFT} },
 	{ MODKEY,			XKB_KEY_period,	focusmon,	{.i = WLR_DIRECTION_RIGHT} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_comma,	tagmon,	{.i = WLR_DIRECTION_LEFT} },
@@ -160,7 +164,8 @@ static const Key keys[] = {
 	TAGKEYS(	XKB_KEY_7,	6),
 	TAGKEYS(	XKB_KEY_8,	7),
 	TAGKEYS(	XKB_KEY_9,	8),
-	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_e,           quit,             {0} },
+
+	{ MODKEY|WLR_MODIFIER_SHIFT,		XKB_KEY_e,	spawn,		{.v = exit_cmd} },
 
 	/* Ctrl-Alt-Backspace and Ctrl-Alt-Fx used to be handled by X server */
 	{ WLR_MODIFIER_CTRL|WLR_MODIFIER_ALT,XKB_KEY_BackSpace, quit, {0} },
