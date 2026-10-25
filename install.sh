@@ -56,8 +56,8 @@ print_step 3
 build dwm dwm/
 build st st/
 
-echo "exec dwm" > ~/.xinitrc
-redshift -O3500 ; xset r rate 300 50 ; exec dwm
+sudo mkdir -p /etc/ly/custom-sessions
+sudo cp dwl/dwl.desktop /etc/ly/custom-sessions/dwl-custom.desktop
 
 echo "Installation is complete"
 

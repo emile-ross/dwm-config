@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=dwl
-Comment=dwm for Wayland
-Exec=dwl
+Name=dwl (custom)
+Comment=dwl with my awsum startup script
+Exec=dwl -s /home/user/.local/bin/dwl-startup
 Type=Application
