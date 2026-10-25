@@ -12,6 +12,12 @@ static const float rootcolor[]             = COLOR(0x222222ff);
 static const float bordercolor[]           = COLOR(0x444444ff);
 static const float focuscolor[]            = COLOR(0x005577ff);
 static const float urgentcolor[]           = COLOR(0xff0000ff);
+
+/* gaps between windows */
+static const int smartgaps                 = 0;  /* 1 means no outer gap when there is only one window */
+static int gaps                            = 1;  /* 1 means gaps between windows are added */
+static const unsigned int gappx            = 10; /* gap pixel between windows */
+
 /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]         = {0.0f, 0.0f, 0.0f, 1.0f}; /* You can also use glsl colors */
 
@@ -65,7 +71,7 @@ static const int tap_to_click = 1;
 static const int tap_and_drag = 1;
 static const int drag_lock = 1;
 static const int natural_scrolling = 0;
-static const int disable_while_typing = 1;
+static const int disable_while_typing = 1;	/* disable trackpad while scrolling */
 static const int left_handed = 0;
 static const int middle_button_emulation = 0;
 /* You can choose between:
@@ -123,7 +129,8 @@ static const char *firefox_cmd[] = { "firefox", NULL };
 static const char *floorp_cmd[] = { "floorp", NULL };
 static const char *chrome_cmd[] = { "chromium", NULL };
 static const char *librewolf_cmd[] = { "librewolf", NULL };
-static const char *exit_cmd[] = { "wlogout", NULL };
+static const char *tol_cmd[] = { "teams-for-linux", NULL };
+
 
 static const Key keys[] = {
 	/* modifier			key		function	argument */
@@ -133,6 +140,8 @@ static const Key keys[] = {
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_2,	spawn,		{.v = firefox_cmd} },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_3,	spawn,		{.v = chrome_cmd} },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_4,	spawn,		{.v = librewolf_cmd} },
+	{ WLR_MODIFIER_LOGO,		XKB_KEY_t,	spawn,		{.v = tol_cmd} },
+	
 
 	{ MODKEY,			XKB_KEY_j,	focusstack,	{.i = +1} },
 	{ MODKEY,			XKB_KEY_k,	focusstack,	{.i = -1} },
@@ -149,6 +158,7 @@ static const Key keys[] = {
 	{ MODKEY,			XKB_KEY_space,	setlayout,	{0} },
 	{ MODKEY|WLR_MODIFIER_SHIFT,	XKB_KEY_space,	togglefloating,	{0} },
 	{ MODKEY,			XKB_KEY_f,	togglefullscreen,	{0} },
+	{ MODKEY,			XKB_KEY_g,	togglegaps,	{0} },
 	{ MODKEY,			XKB_KEY_0,	view,		{.ui = ~0} },
 	{ MODKEY|WLR_MODIFIER_SHIFT,	XKB_KEY_0,	tag,		{.ui = ~0} },
 	{ MODKEY,			XKB_KEY_comma,	focusmon,	{.i = WLR_DIRECTION_LEFT} },
@@ -165,7 +175,7 @@ static const Key keys[] = {
 	TAGKEYS(	XKB_KEY_8,	7),
 	TAGKEYS(	XKB_KEY_9,	8),
 
-	{ MODKEY|WLR_MODIFIER_SHIFT,		XKB_KEY_e,	spawn,		{.v = exit_cmd} },
+	{ MODKEY|WLR_MODIFIER_SHIFT,		XKB_KEY_e,	quit,		{ 0 } },
 
 	/* Ctrl-Alt-Backspace and Ctrl-Alt-Fx used to be handled by X server */
 	{ WLR_MODIFIER_CTRL|WLR_MODIFIER_ALT,XKB_KEY_BackSpace, quit, {0} },
