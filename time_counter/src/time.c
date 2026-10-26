@@ -122,5 +122,38 @@ time_type extract_time(bool *valid_time, char *line_buf, size_t length)
 
 time_type get_next_time(time_type *time_array, uint32_t num_times)
 {
+	time_type return_value = { 0, 0 };
+	bool valid_time = false;
+
+	if (time_array == NULL)
+	{
+		fprintf(stderr, "error: passing NULL pointer to get_next_time() function\n");
+		return return_value;
+	}
+
+	time_t t = time(NULL);
+	struct tm *current_time = localtime(&t);
+
+	uint32_t i = 0;
+	for (i = 0; i < num_times; i++)
+	{
+		if (time_array[i].hour < (int8_t)current_time->tm_hour)
+			continue;
+		if (time_array[i].minute < (int8_t)current_time->tm_min)
+			continue;
+
+		return_value.hour = (int8_t)current_time->tm_hour;
+		return_value.minute = (int8_t)current_time->tm_min;
+		valid_time = true;
+	}
+
+	if (!(valid_time))
+	{
+		/* attempt to find the time for the next day 
+		 * since there is no valid time for today */
+	}
+	/* *current_time localtime() is garbage collected 
+	 * and it doesn't need to be freed */
+	return return_value;
 
 }
