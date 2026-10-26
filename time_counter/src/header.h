@@ -19,5 +19,8 @@
 /* file_reading.c */
 	file_data fread_times(char *file_path);
 
+/* time.c */
+	time_type get_next_time(time_type *time_array, bool *check_next_day, uint32_t num_times);
+
 
 #endif /* HEADER_H */

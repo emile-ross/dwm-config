@@ -120,7 +120,7 @@ time_type extract_time(bool *valid_time, char *line_buf, size_t length)
 }
 
 
-time_type get_next_time(time_type *time_array, uint32_t num_times)
+time_type get_next_time(time_type *time_array, bool *check_next_day, uint32_t num_times)
 {
 	time_type return_value = { 0, 0 };
 	bool valid_time = false;
@@ -135,22 +135,39 @@ time_type get_next_time(time_type *time_array, uint32_t num_times)
 	struct tm *current_time = localtime(&t);
 
 	uint32_t i = 0;
-	for (i = 0; i < num_times; i++)
+	if (!(check_next_day))
 	{
-		if (time_array[i].hour < (int8_t)current_time->tm_hour)
-			continue;
-		if (time_array[i].minute < (int8_t)current_time->tm_min)
-			continue;
+		for (i = 0; i < num_times; i++)
+		{
+			if (time_array[i].hour < (int8_t)current_time->tm_hour)
+				continue;
+			if (time_array[i].minute < (int8_t)current_time->tm_min)
+				continue;
 
-		return_value.hour = (int8_t)current_time->tm_hour;
-		return_value.minute = (int8_t)current_time->tm_min;
-		valid_time = true;
+			return_value.hour = (int8_t)current_time->tm_hour;
+			return_value.minute = (int8_t)current_time->tm_min;
+			valid_time = true;
+		}
 	}
-
-	if (!(valid_time))
+	else
 	{
-		/* attempt to find the time for the next day 
-		 * since there is no valid time for today */
+		for (i = 0; i < num_times; i++)
+		{
+			if (time_array[i].hour < (int8_t)current_time->tm_hour)
+				continue;
+			if (time_array[i].minute < (int8_t)current_time->tm_min)
+				continue;
+
+
+			if (time_array[i].hour > return_value.hour)
+				continue;
+			if (time_array[i].minute > return_value.minute)
+				continue;
+
+			return_value.hour = (int8_t)current_time->tm_hour;
+			return_value.minute = (int8_t)current_time->tm_min;
+			valid_time = true;
+		}
 	}
 	/* *current_time localtime() is garbage collected 
 	 * and it doesn't need to be freed */
