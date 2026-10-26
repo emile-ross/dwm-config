@@ -59,7 +59,7 @@ build st st/
 # building dwl
 sudo mkdir -p /etc/ly/custom-sessions
 build dwl dwl/
-sudo cp dwl/dwl.desktop /etc/ly/custom-sessions/dwl-custom.desktop
+cp dwl/dwl.desktop /etc/ly/custom-sessions/dwl-custom.desktop
 
 # get the username and convert it to a home directory
 USER_HOME=$(getent passwd "$SUDO_USER" | cut -d: -f6)

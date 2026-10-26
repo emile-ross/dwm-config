@@ -7,5 +7,6 @@ exec <&-
 swaybg -c 000000 &
 # start waybar top bar
 waybar &
+swaync &
 wl-paste --watch cliphist store &
 
