@@ -14,12 +14,12 @@
 /* args.c */
 	struct arguments parse_args(const uint32_t argc, const char *restrict argv[]);
 	void help_message(void);
-	time_type extract_time(bool *valid_time, char *line, size_t length);
 
 /* file_reading.c */
 	file_data fread_times(char *file_path);
 
 /* time.c */
+	time_type extract_time(bool *valid_time, char *line, size_t length);
 	time_type get_next_time(time_type *time_array, bool *check_next_day, uint32_t num_times);
 
 

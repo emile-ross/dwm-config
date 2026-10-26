@@ -133,15 +133,20 @@ time_type get_next_time(time_type *time_array, bool *check_next_day, uint32_t nu
 
 	time_t t = time(NULL);
 	struct tm *current_time = localtime(&t);
+	time_type cur = 
+	{
+		current_time.tm_hour,
+		current_time.tm_min,
+	}
+
+	int16_t current_seconds = cur;
 
 	uint32_t i = 0;
 	if (!(check_next_day))
 	{
 		for (i = 0; i < num_times; i++)
 		{
-			if (time_array[i].hour < (int8_t)current_time->tm_hour)
-				continue;
-			if (time_array[i].minute < (int8_t)current_time->tm_min)
+			if (current_seconds > time_array[i])
 				continue;
 
 			return_value.hour = (int8_t)current_time->tm_hour;
@@ -173,4 +178,13 @@ time_type get_next_time(time_type *time_array, bool *check_next_day, uint32_t nu
 	 * and it doesn't need to be freed */
 	return return_value;
 
+}
+
+int16_t time_to_mins(time_type time_arg)
+{
+	/* converts time hours to minutes */
+	uint16_t mins = (unsigned)(time_arg.hour * 60);
+	mins += (unsigned)time_arg.minute;
+
+	return mins;
 }
