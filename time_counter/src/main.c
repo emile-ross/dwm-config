@@ -19,6 +19,11 @@ int main(const int argc, const char *restrict argv[])
 
 	fread_times("example.txt");
 	bool success = false;
+	bool check_next_day = false;
+	do {
+
+	} while (check_next_day);
+
 	time_type a = extract_time(&success, "12:04", 5);
 	time_type b = extract_time(&success, "23:59", 5);
 
