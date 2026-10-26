@@ -16,7 +16,7 @@ static const float urgentcolor[]           = COLOR(0xff0000ff);
 /* gaps between windows */
 static const int smartgaps                 = 0;  /* 1 means no outer gap when there is only one window */
 static int gaps                            = 1;  /* 1 means gaps between windows are added */
-static const unsigned int gappx            = 10; /* gap pixel between windows */
+static const unsigned int gappx            = 8; /* gap pixel between windows */
 
 /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]         = {0.0f, 0.0f, 0.0f, 1.0f}; /* You can also use glsl colors */
@@ -130,6 +130,8 @@ static const char *floorp_cmd[] = { "floorp", NULL };
 static const char *chrome_cmd[] = { "chromium", NULL };
 static const char *librewolf_cmd[] = { "librewolf", NULL };
 static const char *tol_cmd[] = { "teams-for-linux", NULL };
+static const char *prtsc_region[] = { "sway-screenshot -m region -o ~/screenshots/", NULL };
+static const char *prtsc_output[] = { "sway-screenshot -m output -o ~/screenshots/", NULL };
 
 
 static const Key keys[] = {
@@ -141,7 +143,8 @@ static const Key keys[] = {
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_3,	spawn,		{.v = chrome_cmd} },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_4,	spawn,		{.v = librewolf_cmd} },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_t,	spawn,		{.v = tol_cmd} },
-	
+	{ WLR_MODIFIER_LOGO,		XKB_KEY_Print,	spawn,		{.v = prtsc_output} },
+	{ WLR_MODIFIER_LOGO|WLR_MODIFIER_SHIFT, XKB_KEY_Print, spawn,	{.v = prtsc_region} },
 
 	{ MODKEY,			XKB_KEY_j,	focusstack,	{.i = +1} },
 	{ MODKEY,			XKB_KEY_k,	focusstack,	{.i = -1} },
