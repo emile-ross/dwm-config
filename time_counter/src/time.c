@@ -123,7 +123,6 @@ time_type extract_time(bool *valid_time, char *line_buf, size_t length)
 time_type get_next_time(time_type *time_array, bool *check_next_day, uint32_t num_times)
 {
 	time_type return_value = { 0, 0 };
-	bool valid_time = false;
 
 	if (time_array == NULL)
 	{
@@ -135,56 +134,52 @@ time_type get_next_time(time_type *time_array, bool *check_next_day, uint32_t nu
 	struct tm *current_time = localtime(&t);
 	time_type cur = 
 	{
-		current_time->tm_hour,
-		current_time->tm_min,
-	}
+		(int8_t)current_time->tm_hour,
+		(int8_t)current_time->tm_min
+	};
 
-	int16_t current_seconds = cur;
+	int16_t current_seconds = time_to_mins(cur);
 	int16_t return_minutes = -1;
 
 	uint32_t i = 0;
-	if (!(check_next_day))
+	if (!(*check_next_day))
 	{
 		for (i = 0; i < num_times; i++)
 		{
-			if (current_seconds > time_array[i])
+			if (current_seconds > time_to_mins(time_array[i]))
 				continue;
 
 			if (return_minutes != -1)
 			{
-				if (return_minutes < time_array[i])
+				if (return_minutes < time_to_mins(time_array[i]))
 				{
 					continue;
 				}
 			}
 			return_minutes = time_to_mins(time_array[i]);
 			return_value = time_array[i];
-			valid_time = true;
+			(*check_next_day) = false;
 		}
 	}
 	else
 	{
 		for (i = 0; i < num_times; i++)
 		{
-			if (time_array[i].hour < (int8_t)current_time->tm_hour)
-				continue;
-			if (time_array[i].minute < (int8_t)current_time->tm_min)
-				continue;
-
-			if (time_array[i].hour > return_value.hour)
-				continue;
-			if (time_array[i].minute > return_value.minute)
-				continue;
-
-			return_value.hour = (int8_t)current_time->tm_hour;
-			return_value.minute = (int8_t)current_time->tm_min;
-			valid_time = true;
+			if (return_minutes != -1)
+			{
+				if (return_minutes < time_to_mins(time_array[i]))
+				{
+					continue;
+				}
+			}
+			return_minutes = time_to_mins(time_array[i]);
+			return_value = time_array[i];
+			(*check_next_day) = false;
 		}
 	}
 	/* *current_time localtime() is garbage collected 
 	 * and it doesn't need to be freed */
 	return return_value;
-
 }
 
 int16_t time_to_mins(time_type time_arg)
