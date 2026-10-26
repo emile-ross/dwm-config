@@ -57,8 +57,9 @@ build dwm dwm/
 build st st/
 
 # building dwl
-sudo mkdir -p /etc/ly/custom-sessions
+mkdir -p /etc/ly/custom-sessions
 build dwl dwl/
+# add custom dwl launcher to ly boot menu
 cp dwl/dwl.desktop /etc/ly/custom-sessions/dwl-custom.desktop
 
 # get the username and convert it to a home directory

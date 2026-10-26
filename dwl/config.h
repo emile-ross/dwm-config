@@ -8,18 +8,19 @@ static const int sloppyfocus               = 1;  /* focus follows mouse */
 static const int bypass_surface_visibility = 0;  /* 1 means idle inhibitors will disable idle tracking even if it's surface isn't visible  */
 static const unsigned int borderpx         = 2;  /* border pixel of windows */
 static const unsigned int snap             = 32; /* snap pixel */
-static const float rootcolor[]             = COLOR(0x222222ff);
-static const float bordercolor[]           = COLOR(0x000000ff);
-static const float focuscolor[]            = COLOR(0x008899ff);
+static const float rootcolor[]             = COLOR(0x222222FF);
+static const float bordercolor[]           = COLOR(0x00002B74);
+static const float focuscolor[]            = COLOR(0x006D7791);
+
 static const float urgentcolor[]           = COLOR(0xff0000ff);
 
 /* gaps between windows */
 static const int smartgaps                 = 1;  /* 1 means no outer gap when there is only one window */
 static int gaps                            = 1;  /* 1 means gaps between windows are added */
-static const unsigned int gappx            = 8; /* gap pixel between windows */
+static const unsigned int gappx            = 7; /* gap pixel between windows */
 
 /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old behavior */
-static const float fullscreen_bg[]         = {0.0f, 0.0f, 0.0f, 1.0f}; /* You can also use glsl colors */
+static const float fullscreen_bg[]         = {0.0f, 0.0f, 0.0f, 0.0f}; /* You can also use glsl colors */
 
 /* tagging - TAGCOUNT must be no greater than 31 */
 #define TAGCOUNT (9)
@@ -130,6 +131,7 @@ static const char *floorp_cmd[] = { "floorp", NULL };
 static const char *chrome_cmd[] = { "chromium", NULL };
 static const char *librewolf_cmd[] = { "librewolf", NULL };
 static const char *tol_cmd[] = { "teams-for-linux", NULL };
+static const char *swaylock_cmd[] = { "swaylock", NULL };
 /* screenshots are taken using SHCMD() 
  * SHCMD() executes a shell command in sh */
 
@@ -146,6 +148,7 @@ static const Key keys[] = {
 	{ WLR_MODIFIER_LOGO|WLR_MODIFIER_SHIFT, XKB_KEY_Print, spawn,	SHCMD("sway-screenshot -m region -o ~/screenshots/") },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_e,	spawn,		SHCMD("dolphin") },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_k,	spawn,		SHCMD("kleopatra") },
+	{ MODKEY|WLR_MODIFIER_SHIFT,	XKB_KEY_l,	spawn,		{.v = swaylock_cmd} },
 
 	/* close/kill window */
 	{ MODKEY|WLR_MODIFIER_SHIFT,	XKB_KEY_c,	killclient,	{0} },
@@ -169,8 +172,8 @@ static const Key keys[] = {
 	{ MODKEY|WLR_MODIFIER_SHIFT,	XKB_KEY_0,	tag,		{.ui = ~0} },
 	{ MODKEY,			XKB_KEY_comma,	focusmon,	{.i = WLR_DIRECTION_LEFT} },
 	{ MODKEY,			XKB_KEY_period,	focusmon,	{.i = WLR_DIRECTION_RIGHT} },
-	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_comma,	tagmon,	{.i = WLR_DIRECTION_LEFT} },
-	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_period,	tagmon,	{.i = WLR_DIRECTION_RIGHT} },
+	{ MODKEY|WLR_MODIFIER_SHIFT,	XKB_KEY_comma,	tagmon,		{.i = WLR_DIRECTION_LEFT} },
+	{ MODKEY|WLR_MODIFIER_SHIFT,	XKB_KEY_period,	tagmon,		{.i = WLR_DIRECTION_RIGHT} },
 
 	TAGKEYS(	XKB_KEY_1,	0),
 	TAGKEYS(	XKB_KEY_2,	1),
