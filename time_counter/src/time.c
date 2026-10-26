@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <inttypes.h>
+#include <time.h>
 
 time_type extract_time(bool *valid_time, char *line_buf, size_t length)
 {
@@ -116,4 +117,10 @@ time_type extract_time(bool *valid_time, char *line_buf, size_t length)
 
 	return ret;
 	
+}
+
+
+time_type get_next_time(time_type *time_array, uint32_t num_times)
+{
+
 }
