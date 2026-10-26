@@ -21,14 +21,14 @@ int main(const int argc, const char *restrict argv[])
 	bool success = false;
 	bool check_next_day = false;
 	do {
-
 	} while (check_next_day);
 
 	time_type a = extract_time(&success, "12:04", 5);
-	time_type b = extract_time(&success, "23:59", 5);
+	time_type b = extract_time(&success, "13:30", 5);
+	time_type c = extract_time(&success, "14:25", 5);
+	time_type d = extract_time(&success, "20:59", 5);
 
-	time_type arr[2] = { a, b };
-	
+	time_type arr[4] = { a, b, c, d };
 
 	/* this will eventually read from a file 
 	 * and then print something in a json format

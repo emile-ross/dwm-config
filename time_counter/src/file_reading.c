@@ -10,6 +10,13 @@
 #define BASE_ELEMENTS (8)
 #define ELEMETS_INRC (4)
 
+#define SET_TITLE_BUF(buffer_length) \
+	ret.title = malloc(buffer_length); \
+	if (ret.title == NULL) { \
+		fprintf(stderr, "malloc() call failed in file_reading.c\n"); }\
+	strncpy(ret.title, line, buffer_length); \
+	
+
 file_data fread_times(char *file_path)
 {
 	FILE *fp = fopen(file_path, "r");
@@ -51,6 +58,12 @@ file_data fread_times(char *file_path)
 		size_t line_len = strlen(line);
 		if (line_len < 4)
 		{
+			if (line_number == 1)
+			{
+				SET_TITLE_BUF(line_len + 1);
+				continue;
+			}
+				
 			fprintf(stderr, "Line %" PRId16 " is missing parameters\n",
 					line_number);
 			continue;
@@ -61,6 +74,17 @@ file_data fread_times(char *file_path)
 		{
 			times_array[current_entry] = returned_time;
 			current_entry++;
+		}
+		else 
+		{
+			if (ret.title != NULL)
+			{
+				SET_TITLE_BUF(line_len + 1);
+			}
+			else
+			{
+				fprintf(stderr, "Unknown string: \"%s\"\n", line);
+			}
 		}
 	}
 
