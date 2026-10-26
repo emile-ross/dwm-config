@@ -6,7 +6,7 @@
 /* appearance */
 static const int sloppyfocus               = 1;  /* focus follows mouse */
 static const int bypass_surface_visibility = 0;  /* 1 means idle inhibitors will disable idle tracking even if it's surface isn't visible  */
-static const unsigned int borderpx         = 1;  /* border pixel of windows */
+static const unsigned int borderpx         = 2;  /* border pixel of windows */
 static const unsigned int snap             = 32; /* snap pixel */
 static const float rootcolor[]             = COLOR(0x222222ff);
 static const float bordercolor[]           = COLOR(0x444444ff);
@@ -14,7 +14,7 @@ static const float focuscolor[]            = COLOR(0x005577ff);
 static const float urgentcolor[]           = COLOR(0xff0000ff);
 
 /* gaps between windows */
-static const int smartgaps                 = 0;  /* 1 means no outer gap when there is only one window */
+static const int smartgaps                 = 1;  /* 1 means no outer gap when there is only one window */
 static int gaps                            = 1;  /* 1 means gaps between windows are added */
 static const unsigned int gappx            = 8; /* gap pixel between windows */
 
@@ -130,9 +130,8 @@ static const char *floorp_cmd[] = { "floorp", NULL };
 static const char *chrome_cmd[] = { "chromium", NULL };
 static const char *librewolf_cmd[] = { "librewolf", NULL };
 static const char *tol_cmd[] = { "teams-for-linux", NULL };
-static const char *prtsc_region[] = { "sway-screenshot -m region -o ~/screenshots/", NULL };
-static const char *prtsc_output[] = { "sway-screenshot -m output -o ~/screenshots/", NULL };
-
+/* screenshots are taken using SHCMD() 
+ * SHCMD() executes a shell command in sh */
 
 static const Key keys[] = {
 	/* modifier			key		function	argument */
@@ -143,8 +142,8 @@ static const Key keys[] = {
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_3,	spawn,		{.v = chrome_cmd} },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_4,	spawn,		{.v = librewolf_cmd} },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_t,	spawn,		{.v = tol_cmd} },
-	{ WLR_MODIFIER_LOGO,		XKB_KEY_Print,	spawn,		{.v = prtsc_output} },
-	{ WLR_MODIFIER_LOGO|WLR_MODIFIER_SHIFT, XKB_KEY_Print, spawn,	{.v = prtsc_region} },
+	{ WLR_MODIFIER_LOGO,		XKB_KEY_Print,	spawn,		SHCMD("sway-screenshot -m output -o ~/screenshots/") },
+	{ WLR_MODIFIER_LOGO|WLR_MODIFIER_SHIFT, XKB_KEY_Print, spawn,	SHCMD("sway-screenshot -m region -o ~/screenshots/") },
 
 	{ MODKEY,			XKB_KEY_j,	focusstack,	{.i = +1} },
 	{ MODKEY,			XKB_KEY_k,	focusstack,	{.i = -1} },
