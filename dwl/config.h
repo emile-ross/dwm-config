@@ -123,7 +123,7 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 
 /* user defined commands */
 static const char *termcmd[] = { "kitty", NULL };
-static const char *menucmd[] = { "rofi -show", NULL };
+static const char *menucmd[] = { "rofi", "-show", NULL};
 
 static const char *firefox_cmd[] = { "firefox", NULL };
 static const char *floorp_cmd[] = { "floorp", NULL };
@@ -165,6 +165,7 @@ static const Key keys[] = {
 	{ MODKEY,			XKB_KEY_period,	focusmon,	{.i = WLR_DIRECTION_RIGHT} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_comma,	tagmon,	{.i = WLR_DIRECTION_LEFT} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_period,	tagmon,	{.i = WLR_DIRECTION_RIGHT} },
+
 	TAGKEYS(	XKB_KEY_1,	0),
 	TAGKEYS(	XKB_KEY_2,	1),
 	TAGKEYS(	XKB_KEY_3,	2),

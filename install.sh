@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/env bash
 
 bold=$(tput bold)
 undr=$(tput smul)
