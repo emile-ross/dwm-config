@@ -64,8 +64,11 @@ static const struct xkb_rule_names xkb_rules = {
 	.options = NULL,
 };
 
-static const int repeat_rate = 25;
-static const int repeat_delay = 600;
+/* repeating an action when holding a key */
+	/* number of repetitions per second */
+	static const int repeat_rate = 40;	/* default 25 */
+	/* time to hold the key before it repeats (in milliseconds) */
+	static const int repeat_delay = 190;	/* default 600 */
 
 /* Trackpad */
 static const int tap_to_click = 1;
