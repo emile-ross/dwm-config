@@ -45,69 +45,69 @@ by editing the sources, in particular
 .Pa config.h .
 The default key bindings are as follows:
 .Bl -tag -width 20n -offset indent -compact
-.It Mod-[1-9]
+.It Mod(Alt)-[1-9]
 Show only all windows with a tag.
-.It Mod-Ctrl-[1-9]
+.It Mod(Alt)-Ctrl-[1-9]
 Show all windows with a tag.
-.It Mod-Shift-[1-9]
+.It Mod(Alt)-Shift-[1-9]
 Move window to a single tag.
-.It Mod-Ctrl-Shift-[1-9]
+.It Mod(Alt)-Ctrl-Shift-[1-9]
 Toggle tag for window.
-.It Mod-p
+.It Super+D
 Spawn
-.Xr wmenu-run 1 .
-.It Mod-Shift-Return
+.Xr rofi 1 .
+.It Super-Q
 Spawn
-.Xr foot 1 .
-.It Mod-[jk]
+.Xr kitty 1 .
+.It Mod(Alt)-[jk]
 Move focus down/up the stack.
-.It Mod-[id]
+.It Mod(Alt)-[id]
 Increase/decrease number of windows in master area.
-.It Mod-[hl]
+.It Mod(Alt)-[hl]
 Decrease/increase master area.
-.It Mod-Return
+.It Mod(Alt)-Return
 Move window on top of stack or switch top of stack with second window.
-.It Mod-Tab
+.It Mod(Alt)-Tab
 Show only all windows with previous tag.
-.It Mod-Shift-c
+.It Mod(Alt)-Shift-c
 Close window.
-.It Mod-t
+.It Mod(Alt)-t
 Switch to tabbed layout.
-.It Mod-f
+.It Mod(Alt)-f
 Switch to floating layout.
-.It Mod-m
+.It Mod(Alt)-m
 Switch to monocle layout.
-.It Mod-Space
+.It Mod(Alt)-Space
 Switch to previous layout.
-.It Mod-Shift-Space
+.It Mod(Alt)-Shift-Space
 Toggle floating state of window.
-.It Mod-e
+.It Mod(Alt)-e
 Toggle fullscreen state of window.
-.It Mod-0
+.It Mod(Alt)-0
 Show all windows.
-.It Mod-Shift-0
+.It Mod(Alt)-Shift-0
 Set all tags for window.
-.It Mod-,
+.It Mod(Alt)-,
 Move focus to previous monitor.
-.It Mod-.
+.It Mod(Alt)-.
 Move focus to next monitor.
-.It Mod-Shift-,
+.It Mod(Alt)-Shift-,
 Move window to previous monitor.
-.It Mod-Shift-.
+.It Mod(Alt)-Shift-.
 Move window to next monitor.
-.It Mod-Shift-q
+.It Mod(Alt)-Shift-q
 Quit
 .Nm .
 .El
 These might differ depending on your keyboard layout.
 .Ss Mouse commands
 .Bl -tag -width 20n -offset indent -compact
-.It Mod-Button1
+.It Mod(Alt)-Button1
 Move focused window while dragging.
 Tiled windows will be toggled to the floating state.
-.It Mod-Button2
+.It Mod(Alt)-Button2
 Toggle focused window between floating and tiled state.
-.It Mod-Button3
+.It Mod(Alt)-Button3
 Resize focused window while dragging.
 Tiled windows will be toggled to the floating state.
 .El
@@ -190,7 +190,7 @@ Prints the symbol of the current layout.
 When there is a selected window:
 .Bd -literal -offset indent
 HDMI\-A\-1 title \(ti/source/repos/dwl > man \-l dwl.1
-HDMI\-A\-1 appid footclient
+HDMI\-A\-1 appid xterm-kitty
 HDMI\-A\-1 fullscreen 0
 HDMI\-A\-1 floating 0
 HDMI\-A\-1 selmon 1
@@ -251,7 +251,7 @@ with s6 in the background:
 .Dl dwl \-s \(aqs6\-svscan <&\-\(aq
 .Sh SEE ALSO
 .Xr dwm 1 ,
-.Xr foot 1 ,
+.Xr kitty 1 ,
 .Xr wmenu 1 ,
 .Xr xkeyboard-config 7
 .Sh BUGS
