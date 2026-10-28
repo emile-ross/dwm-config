@@ -1,5 +1,9 @@
 #include "header.h"
 
+#include <ctype.h>
+#include <inttypes.h>
+#include <stdlib.h>
+
 time_type extract_time(bool *valid_time, char *line_buf, size_t length)
 {
 	enum date_str_state state = EXPECT_HOUR;
