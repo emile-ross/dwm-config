@@ -8,11 +8,11 @@ static const int sloppyfocus               = 1;  /* focus follows mouse */
 static const int bypass_surface_visibility = 0;  /* 1 means idle inhibitors will disable idle tracking even if it's surface isn't visible  */
 static const unsigned int borderpx         = 2;  /* border pixel of windows */
 static const unsigned int snap             = 32; /* snap pixel */
-static const float rootcolor[]             = COLOR(0x222222FF);
 static const float bordercolor[]           = COLOR(0x00002B74);
-static const float focuscolor[]            = COLOR(0x006D7791);
+static const float rootcolor[]             = COLOR(0x444444FF);
+static const float focuscolor[]            = COLOR(0x004BAAEF);
 
-static const float urgentcolor[]           = COLOR(0xff0000ff);
+static const float urgentcolor[]           = COLOR(0xFF0000FF);
 
 /* gaps between windows */
 static const int smartgaps                 = 1;  /* 1 means no outer gap when there is only one window */
@@ -66,9 +66,9 @@ static const struct xkb_rule_names xkb_rules = {
 
 /* repeating an action when holding a key */
 	/* number of repetitions per second */
-	static const int repeat_rate = 40;	/* default 25 */
+	static const int repeat_rate = 50;	/* default 25 */
 	/* time to hold the key before it repeats (in milliseconds) */
-	static const int repeat_delay = 190;	/* default 600 */
+	static const int repeat_delay = 195;	/* default 600 */
 
 /* Trackpad */
 static const int tap_to_click = 1;

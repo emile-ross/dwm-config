@@ -164,6 +164,7 @@ typedef struct {
 	int isfloating, isurgent, isfullscreen;
 } Client;
 
+/* use controls in order to convert to actual actions */
 typedef struct {
 	uint32_t mod;
 	xkb_keysym_t keysym;
