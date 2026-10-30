@@ -13,11 +13,9 @@ int main(const int argc, const char *restrict argv[])
 			help_message();
 		}
 		parse_args((uint32_t)argc, argv);
-		return 0;
 	}
 
-
-	fread_times("example.txt");
+	fread_times(argv[1]);
 	/* for now this is useless 
 	bool success = false;
 	bool check_next_day = false;

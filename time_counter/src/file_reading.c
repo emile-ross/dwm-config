@@ -17,7 +17,7 @@
 	strncpy(ret.title, line, buffer_length); \
 	
 
-file_data fread_times(char *file_path)
+file_data fread_times(const char *restrict file_path)
 {
 	FILE *fp = fopen(file_path, "r");
 	file_data ret = { NULL, NULL };
@@ -54,6 +54,8 @@ file_data fread_times(char *file_path)
 	uint16_t current_entry = 0;
 	while (fgets(line, MAX_LINE_LEN - 1, fp) && MAX_NUM_TIMES > current_entry)
 	{
+		/* debug */
+		printf("line: %s\n", line);
 		line_number++;
 		size_t line_len = strlen(line);
 		if (line_len < 4)

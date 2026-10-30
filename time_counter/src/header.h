@@ -16,7 +16,7 @@
 	void help_message(void);
 
 /* file_reading.c */
-	file_data fread_times(char *file_path);
+	file_data fread_times(const char *restrict file_path);
 
 /* time.c */
 	time_type extract_time(bool *valid_time, char *line, size_t length);
