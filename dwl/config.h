@@ -68,7 +68,7 @@ static const struct xkb_rule_names xkb_rules = {
 	/* number of repetitions per second */
 	static const int repeat_rate = 50;	/* default 25 */
 	/* time to hold the key before it repeats (in milliseconds) */
-	static const int repeat_delay = 195;	/* default 600 */
+	static const int repeat_delay = 210;	/* default 600 */
 
 /* Trackpad */
 static const int tap_to_click = 1;
@@ -123,7 +123,7 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 	{ MODKEY|WLR_MODIFIER_CTRL|WLR_MODIFIER_SHIFT,KEY,toggletag,  {.ui = 1 << TAG} }
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+#define SHCMD(cmd) { .v = (const char*[]){ "/usr/bin/sh", "-c", cmd, NULL } }
 
 /* user defined commands */
 static const char *termcmd[] = { "kitty", NULL };

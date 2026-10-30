@@ -3,7 +3,6 @@
 
 #include <stdint.h>
 
-
 typedef struct
 {
 	int8_t hour;
@@ -23,7 +22,6 @@ enum date_str_state
 	EXPECT_HOUR = 2,
 	EXPECT_MINUTE = 3
 };
-
 
 typedef enum
 {

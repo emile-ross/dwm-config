@@ -113,6 +113,4 @@ time_type extract_time(bool *valid_time, char *line_buf, size_t length)
 	}
 
 	return ret;
-	
 }
-

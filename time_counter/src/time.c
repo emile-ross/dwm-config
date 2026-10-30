@@ -8,8 +8,6 @@
 #define TIME_TO_MINS(TIME_ARG) \
 	(int16_t)((TIME_ARG.hour * 60) + TIME_ARG.minute)
 
-
-
 time_type get_next_time(time_type *time_array, bool *check_next_day, uint32_t num_times)
 {
 	time_type return_value = { 0, 0 };
