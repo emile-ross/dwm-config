@@ -30,7 +30,7 @@ file_data fread_times(const char *restrict file_path)
 		return ret;
 	}
 
-	times_array = malloc(sizeof(time_type) * num_elements_alloc);
+	times_array = smalloc(sizeof(time_type) * num_elements_alloc);
 	if (times_array == NULL)
 	{
 		fprintf(stderr, "error: malloc() failed to allocate memory of size %" PRId64 "\n",

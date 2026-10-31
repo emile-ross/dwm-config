@@ -2,7 +2,7 @@ CC := cc
 
 CFLAGS := -std=c99 -Wall -Wconversion -Wextra -Wpedantic -Wshadow -Wswitch-enum 
 
-BIN_NAME := get-next-event
+BIN_NAME := next-event-time
 
 SRC_FILES := main.c cmp.c args.c time.c file_reading.c string_read.c
 SRCS := $(addprefix src/, $(SRC_FILES))
@@ -21,6 +21,6 @@ build:
 	$(CC) $(SRCS) -o $(BIN_NAME) -std=c99
 
 install: 
-	$(CC) $(SRCS) -o next-event-time -std=c99
-	mv next-event-time /usr/bin/next-event-time
+	$(CC) $(SRCS) -o $(BIN_NAME) -std=c99
+	mv $(BIN_NAME) /usr/bin/$(BIN_NAME)
 

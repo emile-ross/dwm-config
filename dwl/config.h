@@ -66,7 +66,7 @@ static const struct xkb_rule_names xkb_rules = {
 
 /* repeating an action when holding a key */
 	/* number of repetitions per second */
-	static const int repeat_rate = 50;	/* default 25 */
+	static const int repeat_rate = 35;	/* default 25 */
 	/* time to hold the key before it repeats (in milliseconds) */
 	static const int repeat_delay = 210;	/* default 600 */
 
