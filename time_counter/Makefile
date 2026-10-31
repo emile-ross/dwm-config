@@ -4,7 +4,7 @@ CFLAGS := -std=c99 -Wall -Wconversion -Wextra -Wpedantic -Wshadow -Wswitch-enum
 
 BIN_NAME := next-event-time
 
-SRC_FILES := main.c cmp.c args.c time.c file_reading.c string_read.c
+SRC_FILES := main.c cmp.c args.c time.c file_reading.c string_read.c memory_safety.c
 SRCS := $(addprefix src/, $(SRC_FILES))
 
 
