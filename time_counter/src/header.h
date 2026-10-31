@@ -23,4 +23,8 @@
 	time_type get_next_time(time_type *time_array, bool *check_next_day, uint32_t num_times);
 	int16_t time_to_mins(time_type time_arg);
 
+
+/* memory_safety.c */
+	void *smalloc(size_t size);
+
 #endif /* HEADER_H */
