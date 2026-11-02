@@ -33,4 +33,3 @@ STLDFLAGS = $(LIBS) $(LDFLAGS)
 #MANPREFIX = ${PREFIX}/man
 
 # compiler and linker
-# CC = c99

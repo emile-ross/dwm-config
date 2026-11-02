@@ -22,3 +22,5 @@ install:
 	$(CC) $(SRCS) -o $(BIN_NAME) -std=c99
 	mv $(BIN_NAME) /usr/bin/$(BIN_NAME)
 
+clean:
+	rm $(BIN_NAME);

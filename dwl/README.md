@@ -112,12 +112,7 @@ information. Failing to read this information will cause dwl to block, so if you
 do want to run a startup command that does not consume the status information,
 you can close standard input with the `<&-` shell redirection, for example:
 
-    dwl -s 'foot --server <&-'
-
-If your startup command is a shell script, you can achieve the same inside the
-script with the line
-
-    exec <&-
+    dwl -s /home/USERNAME/.local/bin/dwl-startup
 
 To get a list of status bars that work with dwl consult our [wiki].
 

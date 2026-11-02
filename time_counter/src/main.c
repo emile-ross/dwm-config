@@ -23,14 +23,11 @@ int main(const int argc, char **argv)
 	} while (check_next_day);
 	*/
 
-
 	/* this will eventually read from a file 
 	 * and then print something in a json format
 	 * in order for it to be compatible with waybar */
 	/* set extracted to the current time of day 
 	 * but then set hour & minute to the one we got in the file */
-
-
 
 	return 0;
 }
