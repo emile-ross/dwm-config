@@ -11,7 +11,7 @@
  * way if it encounters some errors since some features get disabled */
 static bool crash_on_failure = false;	/* default is false */
 
-struct arguments parse_args(const uint32_t argc, const char *restrict argv[])
+struct arguments parse_args(const uint32_t argc, char *argv[])
 {
 	struct arguments ret_args =
 	{ 

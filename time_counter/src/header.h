@@ -12,7 +12,7 @@
 	bool scmp(const char *restrict arg, const char *restrict str);
 
 /* args.c */
-	struct arguments parse_args(const uint32_t argc, const char *restrict argv[]);
+	struct arguments parse_args(const uint32_t argc, char *argv[]);
 	void help_message(void);
 
 /* file_reading.c */

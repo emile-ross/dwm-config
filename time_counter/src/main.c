@@ -3,7 +3,7 @@
 #include <inttypes.h>
 #include <stdbool.h>
 
-int main(const int argc, const char *restrict argv[])
+int main(const int argc, char **argv)
 {
 	if (argc > 1)
 	{
