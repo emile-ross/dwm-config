@@ -114,3 +114,17 @@ time_type extract_time(bool *valid_time, char *line_buf, size_t length)
 
 	return ret;
 }
+
+char *time_to_text(time_type time)
+{
+	char *template = "%" PRId8 ":%" PRId8;
+	size_t size = 1 + (unsigned)snprintf(NULL, 0, template, time.hour, time.minute);
+	char *string = malloc(size);
+	if (string == NULL)
+	{
+		fprintf(stderr, "malloc() failed\n");
+		exit(EXIT_FAILURE);
+	}
+	snprintf(string, size, template, time.hour, time.minute);
+	return string;	/* must be freed */
+}
