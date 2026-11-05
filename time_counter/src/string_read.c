@@ -117,7 +117,7 @@ time_type extract_time(bool *valid_time, char *line_buf, size_t length)
 
 char *time_to_text(time_type time)
 {
-	char *template = "%" PRId8 ":%" PRId8;
+	char *template = "%02" PRId8 ":%02" PRId8;
 	size_t size = 1 + (unsigned)snprintf(NULL, 0, template, time.hour, time.minute);
 	char *string = malloc(size);
 	if (string == NULL)

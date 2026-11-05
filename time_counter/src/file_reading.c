@@ -72,12 +72,11 @@ file_data fread_times(const char *restrict file_path)
 		}
 		bool valid_time = true;
 		time_type returned_time = extract_time(&valid_time, line, line_len);
-
-		printf("line: %s\n", line);
 		if (valid_time)
 		{
 			times_array[current_entry] = returned_time;
 			current_entry++;
+			printf("Valid time\n%s\n", time_to_text(returned_time));
 		}
 		else 
 		{

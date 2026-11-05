@@ -27,4 +27,7 @@
 /* memory_safety.c */
 	void *smalloc(size_t size);
 
+
+char *time_to_text(time_type time);
+
 #endif /* HEADER_H */
