@@ -11,9 +11,7 @@
 #define ELEMETS_INRC (4)
 
 #define SET_TITLE_BUF(buffer_length) \
-	ret.title = malloc(buffer_length); \
-	if (ret.title == NULL) { \
-		fprintf(stderr, "malloc() call failed in file_reading.c\n"); }\
+	ret.title = smalloc(buffer_length); \
 	strncpy(ret.title, line, buffer_length); \
 	
 
@@ -82,13 +80,13 @@ file_data fread_times(const char *restrict file_path)
 		}
 		else 
 		{
-			if (ret.title != NULL)
+			if (ret.title == NULL)
 			{
 				SET_TITLE_BUF(line_len + 1);
 			}
 			else
 			{
-				fprintf(stderr, "Unknown string: \"%s\"\n", line);
+				fprintf(stderr, "Unknown string: \"%s\"", line);
 			}
 		}
 	}
@@ -96,6 +94,8 @@ file_data fread_times(const char *restrict file_path)
 	/* assign the pointer to the array to the return value this pointer
 	 * will then be used in order to go through all times possible */
 	ret.time = times_array;
+
+	printf("Title: %s\n", ret.title);
 
 	fclose(fp);
 	return ret;
