@@ -55,7 +55,7 @@ file_data fread_times(const char *restrict file_path)
 	while (fgets(line, MAX_LINE_LEN - 1, fp) && MAX_NUM_TIMES > current_entry)
 	{
 		/* debug */
-		printf("line: %s\n", line);
+		printf("line: %s", line);
 		line_number++;
 		size_t line_len = strlen(line);
 		if (line_len < 4)
@@ -70,13 +70,15 @@ file_data fread_times(const char *restrict file_path)
 					line_number);
 			continue;
 		}
-		bool valid_time = true;
+		bool valid_time = false;
 		time_type returned_time = extract_time(&valid_time, line, line_len);
 		if (valid_time)
 		{
 			times_array[current_entry] = returned_time;
 			current_entry++;
-			printf("Valid time\n%s\n", time_to_text(returned_time));
+			char *time = time_to_text(returned_time);
+			printf("Valid time: '%s'\n", time);
+			free(time);
 		}
 		else 
 		{

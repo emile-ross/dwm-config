@@ -26,8 +26,10 @@
 
 /* memory_safety.c */
 	void *smalloc(size_t size);
+	void *srealloc(void *ptr, size_t size);
 
 
+/* strings.c */
 char *time_to_text(time_type time);
 
 #endif /* HEADER_H */
