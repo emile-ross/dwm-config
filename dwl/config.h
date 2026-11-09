@@ -130,6 +130,7 @@ static const char *termcmd[] = { "kitty", NULL };
 static const char *menucmd[] = { "rofi", "-show", NULL};
 
 static const char *firefox_cmd[] = { "firefox", NULL };
+static const char *vesktop_launch[] = { "vesktop", NULL };
 static const char *floorp_cmd[] = { "floorp", NULL };
 static const char *chrome_cmd[] = { "chromium", NULL };
 static const char *librewolf_cmd[] = { "librewolf", NULL };
@@ -147,6 +148,7 @@ static const Key keys[] = {
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_3,	spawn,		{.v = chrome_cmd} },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_4,	spawn,		{.v = librewolf_cmd} },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_t,	spawn,		{.v = tol_cmd} },
+	{ WLR_MODIFIER_LOGO,		XKB_KEY_v,	spawn,		{.v = vesktop_launch} },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_Print,	spawn,		SHCMD("sway-screenshot -m output -o ~/screenshots/") },
 	{ WLR_MODIFIER_LOGO|WLR_MODIFIER_SHIFT, XKB_KEY_Print, spawn,	SHCMD("sway-screenshot -m region -o ~/screenshots/") },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_e,	spawn,		SHCMD("dolphin") },

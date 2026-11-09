@@ -1,4 +1,4 @@
-CFLAGS := -std=c99 -Wall -Wconversion -Wextra -Wpedantic -Wshadow -Wswitch-enum 
+CFLAGS := -O3 -std=c99 -Wall -Wconversion -Wextra -Wpedantic -Wshadow -Wswitch-enum 
 
 BIN_NAME := next-event-time
 
