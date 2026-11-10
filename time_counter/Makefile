@@ -24,3 +24,6 @@ install:
 
 clean:
 	rm $(BIN_NAME);
+
+test:
+	valgrind --leak-check=full --log-file=val.log --show-leak-kinds=all ./next-event-time --path example.txt    

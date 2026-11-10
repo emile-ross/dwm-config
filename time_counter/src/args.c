@@ -5,6 +5,13 @@
 
 #define BASE_ARGS (3)
 
+#define ARG_CHECK(FLAG_STRING) \
+	if (argc <= i) \
+	{ \
+		fprintf(stderr, "the %s flag expected an argument\n", FLAG_STRING); \
+		return ret_args; \
+	}
+
 /* this crashes the program whenever we encounter an error
  * these errors are not critical and parsing can still continue 
  * however the program will behave in an unpredictable 
@@ -24,13 +31,6 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 	size_t increment = 1;
 	size_t num_elements = BASE_ARGS;
 	ret_args.flags = smalloc(sizeof(flag_types) * num_elements);
-
-	/*
-	CONFIGURE,
-	HELP,
-	NEXT_EVENT,
-	PREV_EVENT
-	*/
 
 	size_t current_index = 0;
 	for (uint32_t i = 0; i < argc; i++)
@@ -54,19 +54,16 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 				fprintf(stderr, "all flags following index %" PRIu32" will be ignored\n"
 						"%" PRIu32 " out of %"PRIu32" arguments were parsed\n", 
 						i, i + 1, argc);
+				return ret_args;
 			}
 			ret_args.flags = ptr;
 		}
-		printf("Element #%"PRIu32" \n", i); /* debug print */
+		printf("Element #%"PRIu32" \n", i);
 		if (scmp("-p", argv[i]) || scmp("--path", argv[i]) || scmp(argv[i], "--file-path"))
 		{
-			printf("%s was found\n", argv[i]);
+			printf("Flag: %s was found\n", argv[i]);	/* debug print */
 			i++;
-			if (argc <= i)
-			{
-				fprintf(stderr, "the --path flag expected an argument\n");
-				return ret_args;
-			}
+			ARG_CHECK(argv[i - 1]);
 			ret_args.source.file_path = argv[i];
 		}
 		else if (scmp("-p", argv[i]) || scmp("--prev", argv[i]))
@@ -86,6 +83,9 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 			/* TODO write something to the heap allocated
 			 * array of command line arguments */
 			printf("%s was found\n", argv[i]);
+			ARG_CHECK(argv[i]);
+			i++;
+
 		}
 		else if (scmp("-H", "--help"))
 		{
