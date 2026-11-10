@@ -12,9 +12,9 @@ time_type get_next_time(const time_type *restrict time_array, bool *check_next_d
 {
 	time_type return_value = { 0, 0 };
 
-	if (time_array == NULL)
+	if (time_array == NULL || check_next_day == NULL || num_times == 0)
 	{
-		fprintf(stderr, "error: passing NULL pointer to get_next_time() function\n");
+		fprintf(stderr, "error: invalid arguments to get_next_time() function\n");
 		return return_value;
 	}
 
@@ -29,10 +29,26 @@ time_type get_next_time(const time_type *restrict time_array, bool *check_next_d
 
 	int16_t current_minutes = (int16_t)((current_time->tm_hour * 60) + current_time->tm_min) ;
 	int16_t next_minutes = 0;
-	bool check_next_day = true;
+	bool not_found = true;
 	uint16_t current_attempt = 0;
 
-	uint32_t i = 0;
+	for (uint32_t i = 0; i < num_times; i++)
+	{
+		current_attempt = TIME_TO_MINS(time_array[i]);
+
+		if (current_attempt < 0 || current_attempt >= 24 * 60)
+			continue;
+
+		if (!(*check_next_day) && (current_attempt < current_minutes))
+			continue;
+
+		if (not_found || current_attempt < next_minutes)
+		{
+			next_minutes = current_attempt;
+			not_found = false;
+			return_value = time_array[i];
+		}
+	}
 	/* (*current_time) localtime() is garbage collected 
 	 * and it doesn't need to be freed */
 	return return_value;
