@@ -57,13 +57,16 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 			}
 			ret_args.flags = ptr;
 		}
-		printf("Element #%"PRIu32" \n", i);
+		printf("Element #%"PRIu32" \n", i); /* debug print */
 		if (scmp("-p", argv[i]) || scmp("--path", argv[i]) || scmp(argv[i], "--file-path"))
 		{
-			/* TODO write something to the heap allocated
-			 * array of command line arguments */
 			printf("%s was found\n", argv[i]);
 			i++;
+			if (argc <= i)
+			{
+				fprintf(stderr, "the --path flag expected an argument\n");
+				return ret_args;
+			}
 			ret_args.source.file_path = argv[i];
 		}
 		else if (scmp("-p", argv[i]) || scmp("--prev", argv[i]))

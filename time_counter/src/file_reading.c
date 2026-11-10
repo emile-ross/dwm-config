@@ -79,6 +79,7 @@ file_data fread_times(const char *restrict file_path)
 			}
 			else
 			{
+				line[line_len - 1] = '\0';
 				fprintf(stderr, "\x1b[31mUnknown string: \"%s\"\n\x1B[0m", line);
 			}
 		}

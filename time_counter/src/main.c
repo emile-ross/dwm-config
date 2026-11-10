@@ -14,13 +14,14 @@ int main(const int argc, char **argv)
 			printf("No need for this many arguments\n");
 			help_message();
 		}
-		argument_data= parse_args((uint32_t)argc, argv);
-
+		argument_data = parse_args((uint32_t)argc, argv);
 	}
 
-	file_data time_array = fread_times(argv[1]);
+
+	file_data time_array = fread_times(argument_data.source.file_path);
 
 	free(time_array.time);
+	free(time_array.title);
 
 	/* for now this is useless 
 	bool success = false;
@@ -37,6 +38,7 @@ int main(const int argc, char **argv)
 
 
 	free(argument_data.flags);
+	printf("reached end\n");
 	return 0;
 }
 
