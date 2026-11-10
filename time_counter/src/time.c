@@ -30,7 +30,23 @@ time_type get_next_time(time_type *time_array, bool *check_next_day, uint32_t nu
 	int16_t return_minutes = -1;
 
 	uint32_t i = 0;
-	if (!(*check_next_day))
+	if (*check_next_day)
+	{
+		for (i = 0; i < num_times; i++)
+		{
+			if (return_minutes != -1)
+			{
+				if (return_minutes < TIME_TO_MINS(time_array[i]))
+				{
+					continue;
+				}
+			}
+			return_minutes = TIME_TO_MINS(time_array[i]);
+			return_value = time_array[i];
+			(*check_next_day) = false;
+		}
+	}
+	else
 	{
 		for (i = 0; i < num_times; i++)
 		{
@@ -49,31 +65,7 @@ time_type get_next_time(time_type *time_array, bool *check_next_day, uint32_t nu
 			(*check_next_day) = false;
 		}
 	}
-	else
-	{
-		for (i = 0; i < num_times; i++)
-		{
-			if (return_minutes != -1)
-			{
-				if (return_minutes < TIME_TO_MINS(time_array[i]))
-				{
-					continue;
-				}
-			}
-			return_minutes = TIME_TO_MINS(time_array[i]);
-			return_value = time_array[i];
-			(*check_next_day) = false;
-		}
-	}
 	/* (*current_time) localtime() is garbage collected 
 	 * and it doesn't need to be freed */
 	return return_value;
-}
-int16_t time_to_mins(time_type time_arg)
-{
-	/* converts time hours to minutes */
-	int16_t mins = (time_arg.hour * 60);
-	mins += time_arg.minute;
-
-	return mins;
 }
