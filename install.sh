@@ -64,11 +64,12 @@ cp dwl/dwl.desktop /etc/ly/custom-sessions/dwl-custom.desktop
 
 # get the username and convert it to a home directory
 USER_HOME=$(getent passwd "$SUDO_USER" | cut -d: -f6)
-cp dwl/startup-dwl.sh "$USER_HOME/.local/bin/dwl-startup"
+cp dwl/other_configs/startup-dwl.sh "$USER_HOME/.local/bin/dwl-startup"
 mkdir -p "$USER_HOME/.config/xdg-desktop-portal"
-cp dwl/other_configs/portals.conf ~/.config/xdg-desktop-portal/portals.conf
+cp dwl/other_configs/portals.conf "$USER_HOME/.config/xdg-desktop-portal/portals.conf"
 
 # enable pipewire & wireplumber
+su $SUDO_USER
 systemctl --user enable --now pipewire.service
 systemctl --user enable --now wireplumber.service
 
