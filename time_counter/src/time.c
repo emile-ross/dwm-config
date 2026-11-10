@@ -8,7 +8,7 @@
 #define TIME_TO_MINS(TIME_ARG) \
 	(int16_t)((TIME_ARG.hour * 60) + TIME_ARG.minute)
 
-time_type get_next_time(time_type *time_array, bool *check_next_day, uint32_t num_times)
+time_type get_next_time(const time_type *restrict time_array, bool *check_next_day, uint32_t num_times)
 {
 	time_type return_value = { 0, 0 };
 
@@ -33,41 +33,6 @@ time_type get_next_time(time_type *time_array, bool *check_next_day, uint32_t nu
 	uint16_t current_attempt = 0;
 
 	uint32_t i = 0;
-	if (*check_next_day)
-	{
-		for (i = 0; i < num_times; i++)
-		{
-			if (return_minutes != -1)
-			{
-				if (return_minutes < TIME_TO_MINS(time_array[i]))
-				{
-					continue;
-				}
-			}
-			return_minutes = TIME_TO_MINS(time_array[i]);
-			return_value = time_array[i];
-			(*check_next_day) = false;
-		}
-	}
-	else
-	{
-		for (i = 0; i < num_times; i++)
-		{
-			if (current_seconds > TIME_TO_MINS(time_array[i]))
-				continue;
-
-			if (return_minutes != -1)
-			{
-				if (return_minutes < TIME_TO_MINS(time_array[i]))
-				{
-					continue;
-				}
-			}
-			return_minutes = TIME_TO_MINS(time_array[i]);
-			return_value = time_array[i];
-			(*check_next_day) = false;
-		}
-	}
 	/* (*current_time) localtime() is garbage collected 
 	 * and it doesn't need to be freed */
 	return return_value;

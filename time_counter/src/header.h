@@ -20,7 +20,7 @@
 
 /* time.c */
 	time_type extract_time(bool *valid_time, char *line, size_t length);
-	time_type get_next_time(time_type *time_array, bool *check_next_day, uint32_t num_times);
+	time_type get_next_time(const time_type *restrict time_array, bool *check_next_day, uint32_t num_times);
 
 /* memory_safety.c */
 	void *smalloc(size_t size);
