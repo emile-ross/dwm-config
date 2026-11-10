@@ -29,13 +29,6 @@ file_data fread_times(const char *restrict file_path)
 	}
 
 	times_array = smalloc(sizeof(time_type) * num_elements_alloc);
-	if (times_array == NULL)
-	{
-		fprintf(stderr, "error: malloc() failed to allocate memory of size %" PRId64 "\n",
-				sizeof(time_type) * num_elements_alloc);
-		fclose(fp);
-		return ret;
-	}
 
 
 	char line[MAX_LINE_LEN] = { 0 };

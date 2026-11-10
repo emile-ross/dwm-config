@@ -2,9 +2,11 @@
 
 #include <inttypes.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 int main(const int argc, char **argv)
 {
+	struct arguments argument_data;
 	if (argc > 1)
 	{
 		if (argc > 3)
@@ -12,10 +14,14 @@ int main(const int argc, char **argv)
 			printf("No need for this many arguments\n");
 			help_message();
 		}
-		parse_args((uint32_t)argc, argv);
+		argument_data= parse_args((uint32_t)argc, argv);
+
 	}
 
-	fread_times(argv[1]);
+	file_data time_array = fread_times(argv[1]);
+
+	free(time_array.time);
+
 	/* for now this is useless 
 	bool success = false;
 	bool check_next_day = false;
@@ -29,6 +35,8 @@ int main(const int argc, char **argv)
 	/* set extracted to the current time of day 
 	 * but then set hour & minute to the one we got in the file */
 
+
+	free(argument_data.flags);
 	return 0;
 }
 
