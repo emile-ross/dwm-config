@@ -61,6 +61,7 @@ mkdir -p /etc/ly/custom-sessions
 build dwl dwl/
 # add custom dwl launcher to ly boot menu
 cp dwl/dwl.desktop /etc/ly/custom-sessions/dwl-custom.desktop
+mkdir -p ~/Videos/obs/frozen-frames/
 
 # get the username and convert it to a home directory
 USER_HOME=$(getent passwd "$SUDO_USER" | cut -d: -f6)

@@ -151,6 +151,7 @@ static const Key keys[] = {
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_v,	spawn,		{.v = vesktop_launch} },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_Print,	spawn,		SHCMD("sway-screenshot -m output -o ~/screenshots/") },
 	{ WLR_MODIFIER_LOGO|WLR_MODIFIER_SHIFT, XKB_KEY_Print, spawn,	SHCMD("sway-screenshot -m region -o ~/screenshots/") },
+	{ MODKEY|WLR_MODIFIER_SHIFT,	XKB_KEY_Print,	spawn,		SHCMD("sway-screenshot -m output -o ~/Videos/obs/frozen-frames -f frozen-screen.png") },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_e,	spawn,		SHCMD("dolphin") },
 	{ WLR_MODIFIER_LOGO,		XKB_KEY_k,	spawn,		SHCMD("kleopatra") },
 	{ MODKEY|WLR_MODIFIER_SHIFT,	XKB_KEY_l,	spawn,		{.v = swaylock_cmd} },

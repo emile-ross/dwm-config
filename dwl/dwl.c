@@ -2509,6 +2509,8 @@ run(char *startup_cmd)
 		die("startup: display_add_socket_auto");
 	setenv("WAYLAND_DISPLAY", socket, 1);
 	setenv("XDG_CURRENT_DESKTOP", "wlroots", 1);
+	system("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE");
+ 
 
 	/* Start the backend. This will enumerate outputs and inputs, become the DRM
 	 * master, etc */
