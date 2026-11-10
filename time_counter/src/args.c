@@ -20,7 +20,6 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 		0
 	};
 
-	/* TODO write string & file path to ret_args */
 	/* allocate the flags on the heap */
 	size_t increment = 1;
 	size_t num_elements = BASE_ARGS;
@@ -63,7 +62,9 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 		{
 			/* TODO write something to the heap allocated
 			 * array of command line arguments */
-			printf("-p was found\n");
+			printf("%s was found\n", argv[i]);
+			i++;
+			ret_args.source.file_path = argv[i];
 		}
 		else if (scmp("-p", argv[i]) || scmp("--prev", argv[i]))
 		{
@@ -81,7 +82,7 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 		{
 			/* TODO write something to the heap allocated
 			 * array of command line arguments */
-			printf("--string was found\n");
+			printf("%s was found\n", argv[i]);
 		}
 		else if (scmp("-H", "--help"))
 		{

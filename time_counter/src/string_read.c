@@ -36,7 +36,8 @@ time_type extract_time(bool *valid_time, char *line_buf, size_t length)
 			long input = strtol(str, &endptr, 10);
 			if (input > 60)
 			{
-				fprintf(stderr, "out of bounds value %" PRId64 "\nline: \"%s\"\n", input, line_buf);
+				line_buf[length - 1] = '\0';
+				fprintf(stderr, "\x1b[31mOut of bounds value %" PRId64 "\nin line line: \"%s\"\n\x1B[0m", input, line_buf);
 				*valid_time = false;
 				return ret;
 			}
