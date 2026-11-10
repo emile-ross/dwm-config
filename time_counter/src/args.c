@@ -16,22 +16,15 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 	struct arguments ret_args =
 	{ 
 		{ NULL },
-		NULL
+		NULL,
+		0
 	};
 
 	/* TODO write string & file path to ret_args */
-
 	/* allocate the flags on the heap */
 	size_t increment = 1;
 	size_t num_elements = BASE_ARGS;
-	ret_args.flags = malloc(sizeof(flag_types) * num_elements);
-
-	if (ret_args.flags == NULL)
-	{
-		fprintf(stderr, "error: in parse_args, malloc() failed to allocate memory"
-				"of size %" PRId64 "\n", sizeof(flag_types) * num_elements);
-		exit(EXIT_FAILURE);
-	}
+	ret_args.flags = smalloc(sizeof(flag_types) * num_elements);
 
 	/*
 	CONFIGURE,
@@ -66,7 +59,7 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 			ret_args.flags = ptr;
 		}
 		printf("Element #%"PRIu32" \n", i);
-		if (scmp("-p", argv[i]) || scmp("--path", argv[i]))
+		if (scmp("-p", argv[i]) || scmp("--path", argv[i]) || scmp(argv[i], "--file-path"))
 		{
 			/* TODO write something to the heap allocated
 			 * array of command line arguments */
@@ -74,13 +67,13 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 		}
 		else if (scmp("-p", argv[i]) || scmp("--prev", argv[i]))
 		{
-			printf("--string was found\n");
+			printf("%s was found\n", argv[i]);
 			ret_args.flags[current_index] = PREV_EVENT;
 			current_index++;
 		}
 		else if (scmp("-n", argv[i]) || scmp("--next", argv[i]))
 		{
-			printf("--string was found\n");
+			printf("%s was found\n", argv[i]);
 			ret_args.flags[current_index] = NEXT_EVENT;
 			current_index++;
 		}

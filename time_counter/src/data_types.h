@@ -26,7 +26,6 @@ enum date_str_state
 typedef enum
 {
 	INVALID_FLAG,
-	CONFIGURE,
 	HELP,
 	NEXT_EVENT,
 	PREV_EVENT
@@ -35,10 +34,11 @@ typedef enum
 struct arguments 
 {
 	union {
-		char *file_path;
-		char *time_string;
+		const char *restrict file_path;
+		const char *restrict time_string;
 	} source;
 	flag_types *flags;	/* heap allocated array */
+	uint16_t num_flags;
 };
 
 #endif /* DATA_TYPES_H */

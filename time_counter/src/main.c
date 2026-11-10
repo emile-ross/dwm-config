@@ -38,5 +38,6 @@ void help_message(void)
 	printf(
 			"-c --configure\n"
 			"-h --help\n"
+			"-p --path, --file-path\n"
 			"-n --next-bus\n");
 }
