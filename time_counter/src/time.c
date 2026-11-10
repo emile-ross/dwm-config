@@ -20,14 +20,17 @@ time_type get_next_time(time_type *time_array, bool *check_next_day, uint32_t nu
 
 	time_t t = time(NULL);
 	struct tm *current_time = localtime(&t);
-	time_type cur = 
-	{
-		(int8_t)current_time->tm_hour,
-		(int8_t)current_time->tm_min
-	};
 
-	int16_t current_seconds = TIME_TO_MINS(cur);
-	int16_t return_minutes = -1;
+	if (current_time == NULL)
+	{
+		fprintf(stderr, "error: unable to retrieve current time\n");
+		return return_value;
+	}
+
+	int16_t current_minutes = (int16_t)((current_time->tm_hour * 60) + current_time->tm_min) ;
+	int16_t next_minutes = 0;
+	bool check_next_day = true;
+	uint16_t current_attempt = 0;
 
 	uint32_t i = 0;
 	if (*check_next_day)
