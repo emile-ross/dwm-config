@@ -35,7 +35,7 @@ fi
 
 # install dependencies
 print_step 1
-pacman -S base-devel xorg-server libx11 libxft git xorg-xinit
+pacman -S base-devel xorg-server libx11 libxft git xorg-xinit xdg-desktop-portal-gtk obs-studio pipewire wireplumber xdg-desktop-portal xdg-desktop-portal-wlr slurp
 
 print_step 2
 echo -n "INFO: "
@@ -65,6 +65,12 @@ cp dwl/dwl.desktop /etc/ly/custom-sessions/dwl-custom.desktop
 # get the username and convert it to a home directory
 USER_HOME=$(getent passwd "$SUDO_USER" | cut -d: -f6)
 cp dwl/startup-dwl.sh "$USER_HOME/.local/bin/dwl-startup"
+mkdir -p "$USER_HOME/.config/xdg-desktop-portal"
+cp dwl/other_configs/portals.conf ~/.config/xdg-desktop-portal/portals.conf
+
+# enable pipewire & wireplumber
+systemctl --user enable --now pipewire.service
+systemctl --user enable --now wireplumber.service
 
 echo "Installation is complete"
 
