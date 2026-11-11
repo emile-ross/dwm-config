@@ -24,7 +24,8 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 	{ 
 		{ NULL },
 		NULL,
-		0
+		0,
+		false
 	};
 
 	/* allocate the flags on the heap */
@@ -72,20 +73,15 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 			ret_args.flags[current_index] = PREV_EVENT;
 			current_index++;
 		}
+		else if (scmp("-s", argv[i]) || scmp("--silent", argv[i]))
+		{
+			ret_args.silent = true;
+		}
 		else if (scmp("-n", argv[i]) || scmp("--next", argv[i]))
 		{
 			printf("%s was found\n", argv[i]);
 			ret_args.flags[current_index] = NEXT_EVENT;
 			current_index++;
-		}
-		else if (scmp("-s", argv[i]) || scmp("--string", argv[i]))
-		{
-			/* TODO write something to the heap allocated
-			 * array of command line arguments */
-			printf("%s was found\n", argv[i]);
-			ARG_CHECK(argv[i]);
-			i++;
-
 		}
 		else if (scmp("-H", "--help"))
 		{

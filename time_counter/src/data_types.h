@@ -2,6 +2,7 @@
 #define DATA_TYPES_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 typedef struct
 {
@@ -39,6 +40,7 @@ struct arguments
 	} source;
 	flag_types *flags;	/* heap allocated array */
 	uint16_t num_flags;
+	bool silent;
 };
 
 #endif /* DATA_TYPES_H */
