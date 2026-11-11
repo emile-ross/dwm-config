@@ -59,7 +59,6 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 			}
 			ret_args.flags = ptr;
 		}
-		printf("Element #%"PRIu32" \n", i);
 		if (scmp("-p", argv[i]) || scmp("--path", argv[i]) || scmp(argv[i], "--file-path"))
 		{
 			printf("Flag: %s was found\n", argv[i]);	/* debug print */

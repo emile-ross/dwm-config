@@ -15,10 +15,10 @@
 	strncpy(ret.title, line, buffer_length); \
 	
 
-file_data fread_times(const char *restrict file_path)
+file_data fread_times(const char *restrict file_path, bool verbose)
 {
 	FILE *fp = fopen(file_path, "r");
-	file_data ret = { NULL, NULL };
+	file_data ret = { NULL, NULL, 0 };
 	time_type *times_array = NULL;
 	uint16_t num_elements_alloc = BASE_ELEMENTS;
 
@@ -45,8 +45,8 @@ file_data fread_times(const char *restrict file_path)
 	uint16_t current_entry = 0;
 	while (fgets(line, MAX_LINE_LEN - 1, fp) && MAX_NUM_TIMES > current_entry)
 	{
-		/* debug */
-		printf("line: %s", line);
+		if (verbose)
+			printf("line: %s", line);
 		line_number++;
 		size_t line_len = strlen(line);
 		if (line_len < 4)
@@ -67,9 +67,13 @@ file_data fread_times(const char *restrict file_path)
 		{
 			times_array[current_entry] = returned_time;
 			current_entry++;
-			char *time = time_to_text(returned_time);
-			printf("Valid time: '%s'\n", time);
-			free(time);
+
+			if (verbose)
+			{
+				char *time = time_to_text(returned_time);
+				printf("Valid time: '%s'\n", time);
+				free(time);
+			}
 		}
 		else 
 		{
@@ -88,8 +92,12 @@ file_data fread_times(const char *restrict file_path)
 	/* assign the pointer to the array to the return value this pointer
 	 * will then be used in order to go through all times possible */
 	ret.time = times_array;
+	ret.number_of_times = current_entry;
 
-	printf("Title: %s\n", ret.title);
+	if (verbose)
+	{
+		printf("Title: %s\n", ret.title);
+	}
 
 	fclose(fp);
 	return ret;

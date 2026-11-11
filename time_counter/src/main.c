@@ -18,20 +18,26 @@ int main(const int argc, char **argv)
 	}
 
 
-	file_data time_array = fread_times(argument_data.source.file_path);
+	file_data time_array = fread_times(argument_data.source.file_path, !(argument_data.silent));
 
 	bool check_next_day = false;
 
-	time_type next = get_next_time(time_array.time, &check_next_day, 10);
+	time_type next = get_next_time(time_array.time, &check_next_day, time_array.number_of_times);
 	char *str = time_to_text(next);
-	printf("For bus %s\n", time_array.title);
-	printf("next bus time: %s\n", str);
+	if (!argument_data.silent)
+	{
+		printf("For bus %s\n", time_array.title);
+		printf("next bus time: %s\n", str);
+	}
+	else
+	{
+		printf("%s\n", str);
+	}
 	free(str);
 
 	free(time_array.time);
 	free(time_array.title);
 	free(argument_data.flags);
-	printf("reached end\n");
 	return 0;
 }
 

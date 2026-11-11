@@ -14,6 +14,7 @@ typedef struct
 {
 	char *title;
 	time_type *time;
+	uint16_t number_of_times;
 } file_data;
 
 enum date_str_state
