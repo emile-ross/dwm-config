@@ -20,23 +20,16 @@ int main(const int argc, char **argv)
 
 	file_data time_array = fread_times(argument_data.source.file_path);
 
+	bool check_next_day = false;
+
+	time_type next = get_next_time(time_array.time, &check_next_day, 10);
+	char *str = time_to_text(next);
+	printf("For bus %s\n", time_array.title);
+	printf("next bus time: %s\n", str);
+	free(str);
+
 	free(time_array.time);
 	free(time_array.title);
-
-	/* for now this is useless 
-	bool success = false;
-	bool check_next_day = false;
-	do {
-	} while (check_next_day);
-	*/
-
-	/* this will eventually read from a file 
-	 * and then print something in a json format
-	 * in order for it to be compatible with waybar */
-	/* set extracted to the current time of day 
-	 * but then set hour & minute to the one we got in the file */
-
-
 	free(argument_data.flags);
 	printf("reached end\n");
 	return 0;
