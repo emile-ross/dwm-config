@@ -100,7 +100,6 @@ file_data fread_times(const char *restrict file_path, bool verbose)
 		printf("Title: %s\n", ret.title);
 	}
 
-	fclose(fp);
 	return ret;
 }
 

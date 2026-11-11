@@ -16,6 +16,7 @@ void json_printing(time_type date, const char *restrict title)
 	snprintf(formatted_output, output_size, json_format, date_str, title);
 	printf("%s\n", formatted_output);	/* print the format to stdout */
 	free(formatted_output);
+	free(date_str);
 
 	return;
 }

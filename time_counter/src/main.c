@@ -18,7 +18,6 @@ int main(const int argc, char **argv)
 		argument_data = parse_args((uint32_t)argc, argv);
 	}
 
-
 	bool default_path_used = false;
 	if (argument_data.source.file_path == NULL)
 	{
@@ -53,12 +52,12 @@ int main(const int argc, char **argv)
 		json_printing(next, time_array.title);
 	}
 
+
 	free(time_array.time);
 	free(time_array.title);
 	free(argument_data.flags);
 	return 0;
 }
-
 
 void help_message(void)
 {
@@ -68,5 +67,3 @@ void help_message(void)
 			"-p --path, --file-path\n"
 			"-n --next-bus\n");
 }
-
-
