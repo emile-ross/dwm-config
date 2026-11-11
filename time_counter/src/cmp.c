@@ -13,3 +13,22 @@ bool scmp(const char *restrict arg, const char *restrict str)
 	}
 	return true;
 }
+
+/* With size version */
+bool str_n_compare(const char *restrict arg, const char *restrict str, size_t size)
+{
+	size_t i = 0;
+
+	while (i < size)
+	{
+		if (arg[i] != str[i])
+			return false;
+
+		if (arg[i] == '\0')
+			return true;
+
+		i++;
+	}
+	return true;
+}
+
