@@ -6,7 +6,7 @@
 #include <time.h>
 
 #define TIME_TO_MINS(TIME_ARG) \
-	(int16_t)((TIME_ARG.hour * 60) + TIME_ARG.minute)
+	(int16_t)(TIME_ARG.hour * 60 + TIME_ARG.minute)
 
 time_type get_next_time(const time_type *restrict time_array, bool *check_next_day, uint32_t num_times)
 {
@@ -30,7 +30,7 @@ time_type get_next_time(const time_type *restrict time_array, bool *check_next_d
 	int16_t current_minutes = (int16_t)((current_time->tm_hour * 60) + current_time->tm_min) ;
 	int16_t next_minutes = 0;
 	bool not_found = true;
-	uint16_t current_attempt = 0;
+	int16_t current_attempt = 0;
 
 	for (uint32_t i = 0; i < num_times; i++)
 	{
@@ -49,6 +49,33 @@ time_type get_next_time(const time_type *restrict time_array, bool *check_next_d
 			return_value = time_array[i];
 		}
 	}
+
+	if (not_found)
+	{
+		/* if next_day is true
+		 * wrap around to the earliest occurrence tomorrow */
+		for (uint32_t i = 0; i < num_times; i++)
+		{
+			current_attempt = TIME_TO_MINS(time_array[i]);
+
+			if (current_attempt < 0 || current_attempt >= 24 * 60)
+				continue;
+
+			if (not_found || current_attempt < next_minutes)
+			{
+				next_minutes = current_attempt;
+				not_found = false;
+				return_value = time_array[i];
+			}
+		}
+
+		*check_next_day = true;
+	}
+	else
+	{
+		*check_next_day = false;
+	}
+
 	/* (*current_time) localtime() is garbage collected 
 	 * and it doesn't need to be freed */
 	return return_value;
