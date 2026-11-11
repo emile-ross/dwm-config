@@ -27,6 +27,7 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 		0,
 		false
 	};
+	ret_args.source.file_path = NULL;
 
 	/* allocate the flags on the heap */
 	size_t increment = 1;
@@ -109,7 +110,10 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 
 	if (ret_args.source.file_path == NULL)
 	{
-		fprintf(stderr, "\x1B[1m\x1b[33mWarning\x1b[0m\x1b[33m: no filename specified \x1b[0m\n");
+		if (!(ret_args.silent))
+		{
+			fprintf(stderr, "\x1B[1m\x1b[33mWarning\x1b[0m\x1b[33m: no filename specified \x1b[0m\n");
+		}
 	}
 
 	return ret_args;

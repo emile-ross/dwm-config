@@ -3,6 +3,7 @@
 /* prevent double include */
 
 #include "data_types.h"
+#include "config.h"
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -29,5 +30,7 @@
 
 /* strings.c */
 char *time_to_text(time_type time);
+
+void json_printing(time_type date, const char *restrict title);
 
 #endif /* HEADER_H */

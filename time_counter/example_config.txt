@@ -1,0 +1,7 @@
+"custom/next-event-time": {
+    "exec": "next-event-time -s",
+    "return-type": "json",
+    "interval": 60,
+    "format": "{text}",
+    "tooltip": true
+},

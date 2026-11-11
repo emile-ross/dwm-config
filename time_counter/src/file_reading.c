@@ -13,6 +13,7 @@
 #define SET_TITLE_BUF(buffer_length) \
 	ret.title = smalloc(buffer_length); \
 	strncpy(ret.title, line, buffer_length); \
+	ret.title[buffer_length - 2] = '\0';
 	
 
 file_data fread_times(const char *restrict file_path, bool verbose)

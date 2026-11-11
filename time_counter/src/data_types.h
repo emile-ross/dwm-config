@@ -36,7 +36,7 @@ typedef enum
 struct arguments 
 {
 	union {
-		const char *restrict file_path;
+		char *file_path;
 		const char *restrict time_string;
 	} source;
 	flag_types *flags;	/* heap allocated array */
