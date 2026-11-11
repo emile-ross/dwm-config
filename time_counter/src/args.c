@@ -90,9 +90,28 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 		}
 		else
 		{
-			ret_args.flags[current_index] = INVALID_FLAG;
-			current_index++;
+			if (current_index == 0)
+			{
+				current_index++;
+				continue;
+			}
+
+			if (ret_args.source.file_path == NULL)
+			{
+				ret_args.source.file_path = argv[i];
+			}
+			else
+			{
+				ret_args.flags[current_index] = INVALID_FLAG;
+				current_index++;
+			}
 		}
 	}
+
+	if (ret_args.source.file_path == NULL)
+	{
+		fprintf(stderr, "\x1B[1m\x1b[33mWarning\x1b[0m\x1b[33m: no filename specified \x1b[0m\n");
+	}
+
 	return ret_args;
 }
