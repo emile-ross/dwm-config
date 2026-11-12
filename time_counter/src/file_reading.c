@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <inttypes.h>
 
 #define MAX_LINE_LEN (256)
@@ -80,7 +81,7 @@ file_data fread_times(const char *restrict file_path, bool verbose)
 			const char *tag_search = "TAG";
 			bool is_tag = true;
 			size_t tag_len = strlen(tag_search);
-			for (uint8_t i = 0; i < strlen(tag_search); i++)
+			for (uint8_t i = 0; i < tag_len; i++)
 			{
 				if (!(line[i] == tag_search[i]))
 				{
@@ -92,8 +93,17 @@ file_data fread_times(const char *restrict file_path, bool verbose)
 			if (is_tag)
 			{
 				/* TODO store tag in argument struct */
-				size_t index = strcspn(line, ":=>-<");
-				char *tag_str = strdup(line + index + 1);
+				size_t index = 1 + strcspn(line, ":=>-<");
+				while (line[index] != '\0' && isspace(line[index]))
+					index++;
+
+				/* no +1 because we want to remove the \n (last visible character)
+				 * it will be replaced by a '\0' NULL terminator */
+				size_t tag_length = strlen(line + index);
+				char *tag_str = smalloc(tag_length);
+				snprintf(tag_str, tag_length, "%s", line + index);
+				tag_str[tag_length - 1] = '\0';
+				printf("Here's the tag: \'%s\'\n", tag_str);
 				/* TODO use smalloc() with snprintf() not strdup() */
 				if (tag_str == NULL)
 				{
