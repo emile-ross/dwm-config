@@ -321,6 +321,7 @@ static void focusclient(Client *c, LayerSurface *l, int lift);
 static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
 static Client *focustop(Monitor *m);
+static void forgetoffmons(void);
 static void fullscreennotify(struct wl_listener *listener, void *data);
 static void gpureset(struct wl_listener *listener, void *data);
 static void handlesig(int signo);
@@ -1519,14 +1520,21 @@ destroylocksurface(struct wl_listener *listener, void *data)
 	if (lock_surface->surface != seat->keyboard_state.focused_surface)
 		return;
 
-	if (locked && cur_lock && !wl_list_empty(&cur_lock->surfaces)) {
-		surface = wl_container_of(cur_lock->surfaces.next, surface, link);
-		client_notify_enter(surface->surface, wlr_seat_get_keyboard(seat));
-	} else if (!locked) {
-		focusclient(focustop(selmon), NULL, 1);
-	} else {
-		wlr_seat_keyboard_clear_focus(seat);
+	if (!locked) {
+ 		focusclient(focustop(selmon), NULL, 1);
+		return;
+ 	}
+
+	/* The surface being destroyed is still in the list */
+	if (cur_lock) {
+		wl_list_for_each(surface, &cur_lock->surfaces, link) {
+			if (surface != lock_surface) {
+				client_notify_enter(surface->surface, wlr_seat_get_keyboard(seat));
+				return;
+			}
+		}
 	}
+	wlr_seat_keyboard_clear_focus(seat);
 }
 
 void
@@ -1701,7 +1709,6 @@ focusmon(const Arg *arg)
 	}
 	focusclient(focustop(selmon), NULL, 1);
 }
-
 void
 focusstack(const Arg *arg)
 {
@@ -1731,14 +1738,23 @@ focusstack(const Arg *arg)
 /* We probably should change the name of this: it sounds like it
  * will focus the topmost client of this mon, when actually will
  * only return that client */
+
 Client *
 focustop(Monitor *m)
 {
-	Client *c;
+	Client *c, *fs = NULL;
+
 	wl_list_for_each(c, &fstack, flink) {
-		if (VISIBLEON(c, m))
-			return c;
+		if (VISIBLEON(c, m) && c->isfullscreen) {
+			fs = c;
+			break;
+		}
 	}
+
+	/* A fullscreen client's children are shown above it */
+	wl_list_for_each(c, &fstack, flink)
+		if (VISIBLEON(c, m) && (!fs || c == fs || client_get_parent(c) == fs))
+			return c;
 	return NULL;
 }
 
@@ -2453,6 +2469,8 @@ powermgrsetmode(struct wl_listener *listener, void *data)
 	if (!m)
 		return;
 
+	if (event->mode)
+		forgetoffmons();
 	m->gamma_lut_changed = 1; /* Reapply gamma LUT when re-enabling the output */
 	wlr_output_state_set_enabled(&state, event->mode);
 	/* The output was reconnected while off and was never modeset */
@@ -3214,7 +3232,7 @@ void
 transactionapply(void)
 {
 	struct wlr_scene_node **ghost;
-	Client *c;
+	Client *c, *p;
 	Monitor *m;
 
 	wl_event_source_timer_update(transaction_timer, 0);
@@ -3236,7 +3254,8 @@ transactionapply(void)
 	wl_list_for_each(m, &mons, link) {
 		if (m->wlr_output->enabled)
 			wlr_scene_node_set_enabled(&m->fullscreen_bg->node,
-					(c = focustop(m)) && c->isfullscreen);
+					(c = focustop(m)) && (c->isfullscreen
+					|| ((p = client_get_parent(c)) && p->isfullscreen)));
 	}
 
 	motionnotify(0, NULL, 0, 0, 0, 0);
