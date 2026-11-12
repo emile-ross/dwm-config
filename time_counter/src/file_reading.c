@@ -31,7 +31,6 @@ file_data fread_times(const char *restrict file_path, bool verbose)
 
 	times_array = smalloc(sizeof(time_type) * num_elements_alloc);
 
-
 	char line[MAX_LINE_LEN] = { 0 };
 
 	/* declared as 16 bit even though max is 256 times
@@ -78,7 +77,22 @@ file_data fread_times(const char *restrict file_path, bool verbose)
 		}
 		else 
 		{
-			if (ret.title == NULL)
+			const char *tag = "TAG";
+			bool is_tag = true;
+			for (uint8_t i = 0; i < strlen(tag); i++)
+			{
+				if (!(line[i] == tag[i]))
+				{
+					is_tag = false;
+					break;
+				}
+			}
+
+			if (is_tag)
+			{
+				/* TODO store tag in argument struct */
+			}
+			else if (ret.title == NULL)
 			{
 				SET_TITLE_BUF(line_len + 1);
 			}

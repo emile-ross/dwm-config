@@ -11,6 +11,7 @@
 
 /* cmp.c */
 	bool scmp(const char *restrict arg, const char *restrict str);
+	bool str_n_compare(const char *restrict arg, const char *restrict str, size_t size);
 
 /* args.c */
 	struct arguments parse_args(const uint32_t argc, char *argv[]);
