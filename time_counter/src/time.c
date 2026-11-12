@@ -8,7 +8,7 @@
 #define TIME_TO_MINS(TIME_ARG) \
 	(int16_t)(TIME_ARG.hour * 60 + TIME_ARG.minute)
 
-time_type get_next_time(const time_type *restrict time_array, bool *check_next_day, uint32_t num_times)
+time_type get_next_time(const time_type *restrict time_array, bool *check_next_day, uint32_t num_times, char **tooltip)
 {
 	time_type return_value = { 0, 0 };
 
@@ -103,7 +103,7 @@ time_type get_next_time(const time_type *restrict time_array, bool *check_next_d
 char *create_tooltip(int8_t hour, int8_t min)
 {
 	char *buffer = NULL;
-	char *template = "in %dh, %dm";
+	char *template = "event in %dh, %dm";
 	size_t size = 1 + (unsigned)snprintf(NULL, 0, template, hour, min);
 
 	buffer = smalloc(size);

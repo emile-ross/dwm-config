@@ -38,17 +38,18 @@ int main(const int argc, char **argv)
 
 	bool check_next_day = false;
 
-	time_type next = get_next_time(time_array.time, &check_next_day, time_array.number_of_times);
-	if (!argument_data.silent)
+	char *tooltip = NULL;
+	time_type next = get_next_time(time_array.time, &check_next_day, time_array.number_of_times, &tooltip);
+	if (argument_data.silent)
+	{
+		json_printing(next, time_array.tag, argument_data.pretty, tooltip);
+	}
+	else
 	{
 		char *str = time_to_text(next);
 		printf("For bus %s\n", time_array.title);
 		printf("next bus time: %s\n", str);
 		free(str);
-	}
-	else
-	{
-		json_printing(next, time_array.title, time_array.tag, argument_data.pretty);
 	}
 
 	free(time_array.time);

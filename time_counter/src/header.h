@@ -22,7 +22,7 @@
 
 /* time.c */
 	time_type extract_time(bool *valid_time, char *line, size_t length);
-	time_type get_next_time(const time_type *restrict time_array, bool *check_next_day, uint32_t num_times);
+	time_type get_next_time(const time_type *restrict time_array, bool *check_next_day, uint32_t num_times, char **tooltip);
 
 /* memory_safety.c */
 	void *smalloc(size_t size);
@@ -32,6 +32,7 @@
 /* strings.c */
 char *time_to_text(time_type time);
 
-void json_printing(time_type date, const char *restrict title, const char *restrict tag, bool pretty);
+void json_printing(time_type date, const char *restrict tag, bool pretty, char *tooltip);
+char *create_tooltip(int8_t hour, int8_t min);
 
 #endif /* HEADER_H */
