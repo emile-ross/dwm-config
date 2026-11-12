@@ -249,6 +249,11 @@ typedef struct {
 } PointerConstraint;
 
 typedef struct {
+		struct wl_listener commit;
+		struct wl_listener destroy;
+} Popup;
+
+typedef struct {
 	const char *id;
 	const char *title;
 	uint32_t tags;
@@ -300,6 +305,7 @@ static void createpopup(struct wl_listener *listener, void *data);
 static void cursorconstrain(struct wlr_pointer_constraint_v1 *constraint);
 static void cursorframe(struct wl_listener *listener, void *data);
 static void cursorwarptohint(void);
+static void destroybackend(struct wl_listener *listener, void *data);
 static void destroydecoration(struct wl_listener *listener, void *data);
 static void destroydragicon(struct wl_listener *listener, void *data);
 static void destroyidleinhibitor(struct wl_listener *listener, void *data);
@@ -459,6 +465,7 @@ static struct wl_array ghosts; /* struct wlr_scene_node *, unmapped clients */
 static struct wl_array offmons; /* char *, names of outputs turned off by clients */
 
 /* global event handlers */
+static struct wl_listener backend_destroy = {.notify = destroybackend};
 static struct wl_listener cursor_axis = {.notify = axisnotify};
 static struct wl_listener cursor_button = {.notify = buttonpress};
 static struct wl_listener cursor_frame = {.notify = cursorframe};
@@ -852,7 +859,8 @@ cleanup(void)
 
 	/* If it's not destroyed manually, it will cause a use-after-free of wlr_seat.
 	 * Destroy it until it's fixed on the wlroots side */
-	wlr_backend_destroy(backend);
+	if (backend)
+		wlr_backend_destroy(backend);
 
 	if (transaction_idle)
 		wl_event_source_remove(transaction_idle);
@@ -906,8 +914,10 @@ cleanuplisteners(void)
 	wl_list_remove(&cursor_motion_absolute.link);
 	wl_list_remove(&gpu_reset.link);
 	wl_list_remove(&new_idle_inhibitor.link);
+	wl_list_remove(&backend_destroy.link);
 	wl_list_remove(&layout_change.link);
 	wl_list_remove(&new_input_device.link);
+	wl_list_remove(&backend_destroy.link);
 	wl_list_remove(&new_virtual_keyboard.link);
 	wl_list_remove(&new_virtual_pointer.link);
 	wl_list_remove(&new_pointer_constraint.link);
@@ -1416,6 +1426,21 @@ cursorwarptohint(void)
 }
 
 void
+destroybackend(struct wl_listener *listener, void *data)
+{
+	/* wlroots destroys the backend itself when the session goes away (e.g.
+	 * seatd stopped at shutdown), and asserts that its listeners are gone */
+	wl_list_remove(&new_output.link);
+	wl_list_init(&new_output.link);
+	wl_list_remove(&new_input_device.link);
+	wl_list_init(&new_input_device.link);
+	wl_list_remove(&backend_destroy.link);
+	wl_list_init(&backend_destroy.link);
+	backend = NULL;
+	quit(NULL);
+}
+
+void
 destroydecoration(struct wl_listener *listener, void *data)
 {
 	Client *c = wl_container_of(listener, c, destroy_decoration);
@@ -1717,6 +1742,26 @@ focustop(Monitor *m)
 	return NULL;
 }
 
+void
+forgetoffmons(void)
+{
+	/* Forget the outputs that were unplugged while off, or they would stay
+	 * off when plugged in again */
+	char **name, **kept = offmons.data;
+	Monitor *m;
+
+	wl_array_for_each(name, &offmons) {
+		wl_list_for_each(m, &mons, link)
+			if (!strcmp(*name, m->wlr_output->name))
+				break;
+		if (&m->link != &mons)
+			*kept++ = *name;
+		else
+			free(*name);
+	}
+	offmons.size = (char *)kept - (char *)offmons.data;
+}
+	
 void
 fullscreennotify(struct wl_listener *listener, void *data)
 {
@@ -2160,6 +2205,8 @@ motionnotify(uint32_t time, struct wlr_input_device *device, double dx, double d
 
 	/* If we are currently grabbing the mouse, handle and return */
 	if (cursor_mode == CurMove) {
+		if (!selmon)
+			return;
 		/* Move the grabbed client to the new position. */
 		nx = (int)round(cursor->x) - grabcx;
 		ny = (int)round(cursor->y) - grabcy;
@@ -2269,8 +2316,12 @@ outputmgrapplyortest(struct wlr_output_configuration_v1 *config, int test)
 	for (i = 0; i < states_len; i++) {
 		struct wlr_swapchain *swapchain = wlr_output_swapchain_manager_get_swapchain(
 				&swapchain_manager, states[i].output);
-		if (swapchain && !states[i].output->enabled)
-			wlr_output_state_set_buffer(&states[i].base, wlr_swapchain_acquire(swapchain));
+		struct wlr_buffer *buffer;
+		if (swapchain && !states[i].output->enabled
+				&& (buffer = wlr_swapchain_acquire(swapchain))) {
+			wlr_output_state_set_buffer(&states[i].base, buffer);
+			wlr_buffer_unlock(buffer);
+		}
 	}
 
 	if (!(ok = wlr_backend_commit(backend, states, states_len)))
@@ -2753,6 +2804,7 @@ setup(void)
 	 * if an X11 server is running. */
 	if (!(backend = wlr_backend_autocreate(event_loop, &session)))
 		die("couldn't create backend");
+	wl_signal_add(&backend->events.destroy, &backend_destroy);
 
 	/* Initialize the scene graph used to lay out windows */
 	scene = wlr_scene_create();
