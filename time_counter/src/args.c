@@ -25,6 +25,7 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 		{ NULL },
 		NULL,
 		0,
+		false,
 		false
 	};
 	ret_args.source.file_path = NULL;
@@ -72,6 +73,11 @@ struct arguments parse_args(const uint32_t argc, char *argv[])
 			printf("%s was found\n", argv[i]);
 			ret_args.flags[current_index] = PREV_EVENT;
 			current_index++;
+		}
+		else if (scmp("-j", argv[i]) || scmp("--json-output", argv[i]) || scmp("--json", argv[i]))
+		{
+			ret_args.silent = true;
+			ret_args.pretty = true;
 		}
 		else if (scmp("-s", argv[i]) || scmp("--silent", argv[i]))
 		{

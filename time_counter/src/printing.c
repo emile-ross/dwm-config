@@ -2,9 +2,13 @@
 
 #include "stdlib.h"
 
-void json_printing(time_type date, const char *restrict title, const char *restrict tag)
+void json_printing(time_type date, const char *restrict title, const char *restrict tag, bool pretty)
 {
-	const char *restrict json_format = "{ \"text\": \"%s %s\", \"tooltip\": \"%s\", \"class\": \"next-event\" } ";
+	const char *restrict json_format;
+	if (pretty)
+		json_format = "{\n\t\"text\": \"%s %s\",\n\t\"tooltip\": \"%s\",\n\t\"class\": \"next-event\"\n} ";
+	else
+		json_format = "{ \"text\": \"%s %s\", \"tooltip\": \"%s\", \"class\": \"next-event\" } ";
 
 	char *formatted_output = NULL;
 	char *date_str = time_to_text(date);

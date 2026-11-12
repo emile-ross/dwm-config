@@ -6,7 +6,7 @@
 
 int main(const int argc, char **argv)
 {
-	struct arguments argument_data = { { NULL }, NULL, 0, false };
+	struct arguments argument_data = { { NULL }, NULL, 0, false, false };
 
 	if (argc > 1)
 	{
@@ -45,18 +45,17 @@ int main(const int argc, char **argv)
 		printf("For bus %s\n", time_array.title);
 		printf("next bus time: %s\n", str);
 		free(str);
-	
 	}
 	else
 	{
-		json_printing(next, time_array.title, time_array.tag);
+		json_printing(next, time_array.title, time_array.tag, argument_data.pretty);
 	}
-
 
 	free(time_array.time);
 	free(time_array.title);
 	free(argument_data.flags);
 	free(time_array.tag);
+
 	return 0;
 }
 

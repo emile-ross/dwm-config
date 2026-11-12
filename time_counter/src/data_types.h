@@ -43,6 +43,7 @@ struct arguments
 	flag_types *flags;	/* heap allocated array */
 	uint16_t num_flags;
 	bool silent;
+	bool pretty;
 };
 
 #endif /* DATA_TYPES_H */

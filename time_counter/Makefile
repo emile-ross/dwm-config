@@ -1,4 +1,4 @@
-CFLAGS := -O3 -std=c99 -Wall -Wconversion -Wextra -Wpedantic -Wshadow -Wswitch-enum 
+CFLAGS := -O4 -std=c99 -Wall -Wconversion -Wextra -Wpedantic -Wshadow -Wswitch-enum 
 
 BIN_NAME := next-event-time
 
@@ -19,7 +19,6 @@ build:
 	$(CC) $(SRCS) -o $(BIN_NAME) -std=c99
 
 install: 
-	$(CC) $(SRCS) -o $(BIN_NAME) -std=c99
 	mv $(BIN_NAME) /usr/bin/$(BIN_NAME)
 
 clean:

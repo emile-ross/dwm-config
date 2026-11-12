@@ -32,6 +32,6 @@
 /* strings.c */
 char *time_to_text(time_type time);
 
-void json_printing(time_type date, const char *restrict title, const char *restrict tag);
+void json_printing(time_type date, const char *restrict title, const char *restrict tag, bool pretty);
 
 #endif /* HEADER_H */
