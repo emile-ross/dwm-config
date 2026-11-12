@@ -19,7 +19,7 @@
 file_data fread_times(const char *restrict file_path, bool verbose)
 {
 	FILE *fp = fopen(file_path, "r");
-	file_data ret = { NULL, NULL, 0 };
+	file_data ret = { NULL, NULL, NULL, 0 };
 	time_type *times_array = NULL;
 	uint16_t num_elements_alloc = BASE_ELEMENTS;
 
@@ -77,12 +77,12 @@ file_data fread_times(const char *restrict file_path, bool verbose)
 		}
 		else 
 		{
-			const char *tag = "TAG";
+			const char *tag_search = "TAG";
 			bool is_tag = true;
-			size_t tag_len = strlen(tag);
-			for (uint8_t i = 0; i < strlen(tag); i++)
+			size_t tag_len = strlen(tag_search);
+			for (uint8_t i = 0; i < strlen(tag_search); i++)
 			{
-				if (!(line[i] == tag[i]))
+				if (!(line[i] == tag_search[i]))
 				{
 					is_tag = false;
 					break;

@@ -12,7 +12,7 @@ all:
 
 .PHONY: warn
 warn:
-	$(CC) $(SRCS) -o $(BIN_NAME) $(CFLAGS)
+	$(CC) $(SRCS) -o $(BIN_NAME) # $(CFLAGS)
 
 .PHONY: build
 build: 
