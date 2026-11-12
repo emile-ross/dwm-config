@@ -78,6 +78,7 @@ time_type get_next_time(const time_type *restrict time_array, bool *check_next_d
 
 	printf("hours %d\nMinutes %d\n", next_minutes / 60, next_minutes % 60);
 	printf("hours %d\nMinutes %d\n", current_minutes / 60, current_minutes % 60);
+
 	int16_t diff = next_minutes - current_minutes;
 	char *buffer = NULL;
 	if (diff > 0)
@@ -92,10 +93,21 @@ time_type get_next_time(const time_type *restrict time_array, bool *check_next_d
 		printf("%s\n", buffer);
 		free(buffer);
 	}
-	else
-		fprintf(stderr, "invalid time in minutes \n");
+	printf("%s\n", create_tooltip((int8_t)(diff / 60), (int8_t)(diff % 60)));
 
 	/* (*current_time) localtime() is garbage collected 
 	 * and it doesn't need to be freed */
 	return return_value;
+}
+
+char *create_tooltip(int8_t hour, int8_t min)
+{
+	char *buffer = NULL;
+	char *template = "in %dh, %dm";
+	size_t size = 1 + (unsigned)snprintf(NULL, 0, template, hour, min);
+
+	buffer = smalloc(size);
+	snprintf(buffer, size, template, hour, min);
+
+	return buffer;
 }
