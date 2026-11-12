@@ -49,13 +49,14 @@ int main(const int argc, char **argv)
 	}
 	else
 	{
-		json_printing(next, time_array.title, "hi");
+		json_printing(next, time_array.title, time_array.tag);
 	}
 
 
 	free(time_array.time);
 	free(time_array.title);
 	free(argument_data.flags);
+	free(time_array.tag);
 	return 0;
 }
 

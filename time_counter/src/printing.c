@@ -4,16 +4,16 @@
 
 void json_printing(time_type date, const char *restrict title, const char *restrict tag)
 {
-	const char *restrict json_format = "{ \"text\": \"%s\", \"tooltip\": \"%s\", \"class\": \"next-event\" } ";
+	const char *restrict json_format = "{ \"text\": \"%s %s\", \"tooltip\": \"%s\", \"class\": \"next-event\" } ";
 
 	char *formatted_output = NULL;
 	char *date_str = time_to_text(date);
 
 	/* get size & allocate memor y*/
-	size_t output_size = 1 + (unsigned)snprintf(NULL, 0, json_format, date_str, title);
+	size_t output_size = 1 + (unsigned)snprintf(NULL, 0, json_format, tag, date_str, title);
 	formatted_output = smalloc(output_size);
 
-	snprintf(formatted_output, output_size, json_format, date_str, title);
+	snprintf(formatted_output, output_size, json_format, tag, date_str, title);
 	printf("%s\n", formatted_output);	/* print the format to stdout */
 	free(formatted_output);
 	free(date_str);

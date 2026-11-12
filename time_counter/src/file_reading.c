@@ -103,15 +103,7 @@ file_data fread_times(const char *restrict file_path, bool verbose)
 				char *tag_str = smalloc(tag_length);
 				snprintf(tag_str, tag_length, "%s", line + index);
 				tag_str[tag_length - 1] = '\0';
-				printf("Here's the tag: \'%s\'\n", tag_str);
-				/* TODO use smalloc() with snprintf() not strdup() */
-				if (tag_str == NULL)
-				{
-					fprintf(stderr, "strdup() call failed to allocate memory for tag string\n");
-					return ret;
-				}
-				
-				printf("Tag: \'%s\'\n", tag_str);
+				ret.tag = tag_str;
 			}
 			else if (ret.title == NULL)
 			{
