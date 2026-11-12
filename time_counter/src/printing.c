@@ -2,7 +2,7 @@
 
 #include "stdlib.h"
 
-void json_printing(time_type date, const char *restrict title)
+void json_printing(time_type date, const char *restrict title, const char *restrict tag)
 {
 	const char *restrict json_format = "{ \"text\": \"%s\", \"tooltip\": \"%s\", \"class\": \"next-event\" } ";
 

@@ -79,6 +79,7 @@ file_data fread_times(const char *restrict file_path, bool verbose)
 		{
 			const char *tag = "TAG";
 			bool is_tag = true;
+			size_t tag_len = strlen(tag);
 			for (uint8_t i = 0; i < strlen(tag); i++)
 			{
 				if (!(line[i] == tag[i]))
@@ -91,6 +92,16 @@ file_data fread_times(const char *restrict file_path, bool verbose)
 			if (is_tag)
 			{
 				/* TODO store tag in argument struct */
+				size_t index = strcspn(line, ":=>-<");
+				char *tag_str = strdup(line + index + 1);
+				/* TODO use smalloc() with snprintf() not strdup() */
+				if (tag_str == NULL)
+				{
+					fprintf(stderr, "strdup() call failed to allocate memory for tag string\n");
+					return ret;
+				}
+				
+				printf("Tag: \'%s\'\n", tag_str);
 			}
 			else if (ret.title == NULL)
 			{

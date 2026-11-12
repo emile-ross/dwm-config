@@ -49,7 +49,7 @@ int main(const int argc, char **argv)
 	}
 	else
 	{
-		json_printing(next, time_array.title);
+		json_printing(next, time_array.title, "hi");
 	}
 
 
