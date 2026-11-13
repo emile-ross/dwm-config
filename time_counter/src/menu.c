@@ -33,6 +33,21 @@ uint16_t get_input(uint16_t lb, uint16_t ub)
 	{
 		printf("%s\n", input_buffer);
 	}
+	else
+	{
+		fprintf(stderr, "fgets() failed to get input\n");
+		exit(EXIT_FAILURE);
+	}
+
+	char *endptr = NULL;
+	long input = strtol(input_buffer, &endptr, 10);
+
+	if (input > ub)
+	{
+	}
+	else if (input < lb)
+	{
+	}
 
 	return 0;
 }
