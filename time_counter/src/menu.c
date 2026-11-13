@@ -4,18 +4,14 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#define GET() \
-	
-
 
 void display_menu(void)
 {
 	uint16_t num_options = 2;
-	uint16_t input = 0
+	uint16_t input = 0;
 	while (1)
 	{
-		input = GET();
-
+		input = get_input(0, num_options);
 		if (input == 0)
 		{
 			break;
@@ -44,9 +40,11 @@ uint16_t get_input(uint16_t lb, uint16_t ub)
 
 	if (input > ub)
 	{
+		fprintf(stderr, "input is larger than upper bound\n");
 	}
 	else if (input < lb)
 	{
+		fprintf(stderr, "input is lower than lower bound\n");
 	}
 
 	return 0;
