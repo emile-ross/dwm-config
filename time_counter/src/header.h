@@ -30,12 +30,14 @@
 
 /* menu.c */
 	void display_menu(void);
+	uint16_t get_input(uint16_t lb, uint16_t ub);
 
 
 /* strings.c */
-char *time_to_text(time_type time);
+	char *time_to_text(time_type time);
 
-void json_printing(time_type date, const char *restrict tag, bool pretty, char *tooltip);
-char *create_tooltip(int8_t hour, int8_t min);
+/* printing.c */
+	void json_printing(time_type date, const char *restrict tag, bool pretty, char *tooltip);
+	char *create_tooltip(int8_t hour, int8_t min);
 
 #endif /* HEADER_H */
