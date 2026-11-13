@@ -28,6 +28,9 @@
 	void *smalloc(size_t size);
 	void *srealloc(void *ptr, size_t size);
 
+/* menu.c */
+	void display_menu(void);
+
 
 /* strings.c */
 char *time_to_text(time_type time);

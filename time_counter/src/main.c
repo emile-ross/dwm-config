@@ -17,6 +17,11 @@ int main(const int argc, char **argv)
 		}
 		argument_data = parse_args((uint32_t)argc, argv);
 	}
+	else
+	{
+		display_menu();
+		return 0;
+	}
 
 	bool default_path_used = false;
 	if (argument_data.source.file_path == NULL)
