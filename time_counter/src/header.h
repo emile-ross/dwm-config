@@ -30,7 +30,7 @@
 
 /* menu.c */
 	void display_menu(void);
-	int64_t get_input(int16_t lb, int16_t ub);
+	int64_t get_input(bool *success, int16_t lb, int16_t ub);
 
 
 /* strings.c */

@@ -12,7 +12,7 @@ void display_menu(void)
 	bool success = true;
 	while (1)
 	{
-		input = (uint16_t)get_input(0, num_options, &success);
+		input = (uint16_t)get_input(&success, 0, num_options);
 		if (input == 0)
 		{
 			break;
@@ -25,7 +25,7 @@ void display_menu(void)
 	return;
 }
 
-int64_t get_input(int16_t lb, int16_t ub)
+int64_t get_input(bool *success, int16_t lb, int16_t ub)
 {
 	size_t size_input = 16;
 	char *input_buffer = smalloc(size_input);
@@ -46,15 +46,20 @@ int64_t get_input(int16_t lb, int16_t ub)
 	if (input > ub)
 	{
 		fprintf(stderr, "input is larger than upper bound\n");
-		/* success = false; */
+		*success = false;
 	}
 	else if (input < lb)
 	{
 		fprintf(stderr, "input is lower than lower bound\n");
-		/* success = false; */
+		*success = false;
+	}
+	else
+	{
+		/* this might need a cast on systems
+		 * where a long isn't 64 bit wide */
+		*success = true;
+		return input;
 	}
 
-	/* this might need a cast on systems
-	 * where a long isn't 64 bit wide */
-	return input;
+	return -1;
 }
