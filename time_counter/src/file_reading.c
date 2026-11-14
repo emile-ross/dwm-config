@@ -129,4 +129,3 @@ file_data fread_times(const char *restrict file_path, bool verbose)
 
 	return ret;
 }
-
