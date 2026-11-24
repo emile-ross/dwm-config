@@ -2065,6 +2065,7 @@ mapnotify(struct wl_listener *listener, void *data)
 			foreign_toplevel_list, &foreign_toplevel_state);
 	c->foreign_toplevel_handle->data = c;
 	c->image_capture_scene = wlr_scene_create();
+	c->image_capture_scene->restack_xwayland_surfaces = 0;
 	if (c->type == XDGShell)
 		c->capture.image_capture_tree = wlr_scene_xdg_surface_create(&c->image_capture_scene->tree, c->surface.xdg);
 #ifdef XWAYLAND
@@ -2682,10 +2683,11 @@ void
 setfloating(Client *c, int floating)
 {
 	c->isfloating = floating;
-	/* If in floating layout do not change the client's layer */
-	if (!c->mon || !client_surface(c)->mapped || !c->mon->lt[c->mon->sellt]->arrange)
+	if (!c->mon || !client_surface(c)->mapped)
 		return;
-	arrange(c->mon);
+	/* If in floating layout do not change the client's layer */
+	if (c->mon->lt[c->mon->sellt]->arrange)
+		arrange(c->mon);
 	printstatus();
 }
 
